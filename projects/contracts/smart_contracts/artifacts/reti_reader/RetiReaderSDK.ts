@@ -23,7 +23,7 @@ import { TransactionComposer, AppCallMethodCall, AppMethodCallTransactionArgumen
 import { SendParams, SendSingleTransactionResult, SendAtomicTransactionComposerResults } from '@algorandfoundation/algokit-utils/types/transaction'
 import { Address, encodeAddress, modelsv2, OnApplicationComplete, Transaction, TransactionSigner } from 'algosdk'
 
-export const APP_SPEC: Arc56Contract = {"name":"RetiReader","structs":{"ValidatorCurState":[{"name":"numPools","type":"uint16"},{"name":"totalStakers","type":"uint64"},{"name":"totalAlgoStaked","type":"uint64"},{"name":"rewardTokenHeldBack","type":"uint64"}]},"methods":[{"name":"getValidatorStates","args":[{"type":"uint64","name":"registryAppId"},{"type":"uint64[]","name":"validatorIds"}],"returns":{"type":"(uint16,uint64,uint64,uint64)","struct":"ValidatorCurState"},"actions":{"create":["NoOp"],"call":[]},"readonly":true,"events":[],"recommendations":{}}],"arcs":[22,28],"networks":{},"state":{"schema":{"global":{"ints":0,"bytes":0},"local":{"ints":0,"bytes":0}},"keys":{"global":{},"local":{},"box":{}},"maps":{"global":{},"local":{},"box":{}}},"bareActions":{"create":[],"call":[]},"sourceInfo":{"approval":{"sourceInfo":[{"pc":[124],"errorMessage":"Bytes has valid prefix"},{"pc":[27],"errorMessage":"OnCompletion must be NoOp && can only call when creating"},{"pc":[80],"errorMessage":"index access is out of bounds"},{"pc":[46],"errorMessage":"invalid array length header"},{"pc":[130],"errorMessage":"invalid number of bytes for ValidatorCurState"},{"pc":[58],"errorMessage":"invalid number of bytes for arc4.dynamic_array<uint64>"},{"pc":[38],"errorMessage":"invalid number of bytes for arc4.uint64"}],"pcOffsetMethod":"none"},"clear":{"sourceInfo":[],"pcOffsetMethod":"none"}},"source":{"approval":"I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBAYWxnb3JhbmRmb3VuZGF0aW9uL2FsZ29yYW5kLXR5cGVzY3JpcHQvYXJjNC9pbmRleC5kLnRzOjpDb250cmFjdC5hcHByb3ZhbFByb2dyYW0oKSAtPiB1aW50NjQ6Cm1haW46CiAgICBpbnRjYmxvY2sgOCAwIDEKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9yZXRpX3JlYWRlci9jb250cmFjdC5hbGdvLnRzOjUKICAgIC8vIGV4cG9ydCBjbGFzcyBSZXRpUmVhZGVyIGV4dGVuZHMgQ29udHJhY3QgewogICAgcHVzaGJ5dGVzIDB4MjRlMDBjODAgLy8gbWV0aG9kICJnZXRWYWxpZGF0b3JTdGF0ZXModWludDY0LHVpbnQ2NFtdKSh1aW50MTYsdWludDY0LHVpbnQ2NCx1aW50NjQpIgogICAgdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAogICAgbWF0Y2ggbWFpbl9nZXRWYWxpZGF0b3JTdGF0ZXNfcm91dGVAMgogICAgZXJyCgptYWluX2dldFZhbGlkYXRvclN0YXRlc19yb3V0ZUAyOgogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6NgogICAgLy8gQGFiaW1ldGhvZCh7IHJlYWRvbmx5OiB0cnVlLCBvbkNyZWF0ZTogJ3JlcXVpcmUnIH0pCiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgIQogICAgJiYKICAgIGFzc2VydCAvLyBPbkNvbXBsZXRpb24gbXVzdCBiZSBOb09wICYmIGNhbiBvbmx5IGNhbGwgd2hlbiBjcmVhdGluZwogICAgYiBnZXRWYWxpZGF0b3JTdGF0ZXMKCgovLyBzbWFydF9jb250cmFjdHMvcmV0aV9yZWFkZXIvY29udHJhY3QuYWxnby50czo6UmV0aVJlYWRlci5nZXRWYWxpZGF0b3JTdGF0ZXNbcm91dGluZ10oKSAtPiB2b2lkOgpnZXRWYWxpZGF0b3JTdGF0ZXM6CiAgICAvLyBzbWFydF9jb250cmFjdHMvcmV0aV9yZWFkZXIvY29udHJhY3QuYWxnby50czo2CiAgICAvLyBAYWJpbWV0aG9kKHsgcmVhZG9ubHk6IHRydWUsIG9uQ3JlYXRlOiAncmVxdWlyZScgfSkKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDEKICAgIGR1cAogICAgbGVuCiAgICBpbnRjXzAgLy8gOAogICAgPT0KICAgIGFzc2VydCAvLyBpbnZhbGlkIG51bWJlciBvZiBieXRlcyBmb3IgYXJjNC51aW50NjQKICAgIGJ0b2kKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDIKICAgIGR1cG4gMgogICAgaW50Y18xIC8vIDAKICAgIGV4dHJhY3RfdWludDE2IC8vIG9uIGVycm9yOiBpbnZhbGlkIGFycmF5IGxlbmd0aCBoZWFkZXIKICAgIGR1cAogICAgY292ZXIgMgogICAgaW50Y18wIC8vIDgKICAgICoKICAgIHB1c2hpbnQgMiAvLyAyCiAgICArCiAgICBzd2FwCiAgICBsZW4KICAgID09CiAgICBhc3NlcnQgLy8gaW52YWxpZCBudW1iZXIgb2YgYnl0ZXMgZm9yIGFyYzQuZHluYW1pY19hcnJheTx1aW50NjQ+CiAgICBpbnRjXzEgLy8gMAoKZ2V0VmFsaWRhdG9yU3RhdGVzX2Zvcl9oZWFkZXJAMjoKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9yZXRpX3JlYWRlci9jb250cmFjdC5hbGdvLnRzOjgKICAgIC8vIGZvciAoY29uc3QgdmFsaWRhdG9ySWQgb2YgdmFsaWRhdG9ySWRzKSB7CiAgICBkdXAKICAgIGRpZyAyCiAgICA8CiAgICBieiBnZXRWYWxpZGF0b3JTdGF0ZXNfYWZ0ZXJfZm9yQDYKICAgIGRpZyAyCiAgICBleHRyYWN0IDIgMAogICAgZGlnIDEKICAgIGR1cAogICAgY292ZXIgMgogICAgaW50Y18wIC8vIDgKICAgICoKICAgIGludGNfMCAvLyA4CiAgICBleHRyYWN0MyAvLyBvbiBlcnJvcjogaW5kZXggYWNjZXNzIGlzIG91dCBvZiBib3VuZHMKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9yZXRpX3JlYWRlci9jb250cmFjdC5hbGdvLnRzOjktMTIKICAgIC8vIGNvbnN0IHsgcmV0dXJuVmFsdWUgfSA9IGNvbXBpbGVBcmM0KFJldGkpLmNhbGwuZ2V0VmFsaWRhdG9yU3RhdGUoewogICAgLy8gICBhcHBJZDogcmVnaXN0cnlBcHBJZCwKICAgIC8vICAgYXJnczogW3ZhbGlkYXRvcklkXSwKICAgIC8vIH0pOwogICAgaXR4bl9iZWdpbgogICAgcHVzaGJ5dGVzIDB4MWYyZjAxMDkgLy8gbWV0aG9kICJnZXRWYWxpZGF0b3JTdGF0ZSh1aW50NjQpKHVpbnQxNix1aW50NjQsdWludDY0LHVpbnQ2NCkiCiAgICBpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwogICAgaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKICAgIGludGNfMSAvLyAwCiAgICBpdHhuX2ZpZWxkIE9uQ29tcGxldGlvbgogICAgZGlnIDQKICAgIGl0eG5fZmllbGQgQXBwbGljYXRpb25JRAogICAgcHVzaGludCA2IC8vIGFwcGwKICAgIGl0eG5fZmllbGQgVHlwZUVudW0KICAgIGludGNfMSAvLyAwCiAgICBpdHhuX2ZpZWxkIEZlZQogICAgaXR4bl9zdWJtaXQKICAgIGl0eG4gTGFzdExvZwogICAgZHVwCiAgICBleHRyYWN0IDQgMAogICAgc3dhcAogICAgZXh0cmFjdCAwIDQKICAgIHB1c2hieXRlcyAweDE1MWY3Yzc1CiAgICA9PQogICAgYXNzZXJ0IC8vIEJ5dGVzIGhhcyB2YWxpZCBwcmVmaXgKICAgIGR1cAogICAgbGVuCiAgICBwdXNoaW50IDI2IC8vIDI2CiAgICA9PQogICAgYXNzZXJ0IC8vIGludmFsaWQgbnVtYmVyIG9mIGJ5dGVzIGZvciBWYWxpZGF0b3JDdXJTdGF0ZQogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MTMKICAgIC8vIGxvZyhlbmNvZGVBcmM0KHJldHVyblZhbHVlKSk7CiAgICBsb2cKICAgIGludGNfMiAvLyAxCiAgICArCiAgICBidXJ5IDEKICAgIGIgZ2V0VmFsaWRhdG9yU3RhdGVzX2Zvcl9oZWFkZXJAMgoKZ2V0VmFsaWRhdG9yU3RhdGVzX2FmdGVyX2ZvckA2OgogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6NgogICAgLy8gQGFiaW1ldGhvZCh7IHJlYWRvbmx5OiB0cnVlLCBvbkNyZWF0ZTogJ3JlcXVpcmUnIH0pCiAgICBwdXNoYnl0ZXMgMHgxNTFmN2M3NTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAKICAgIGxvZwogICAgaW50Y18yIC8vIDEKICAgIHJldHVybgo=","clear":"I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBAYWxnb3JhbmRmb3VuZGF0aW9uL2FsZ29yYW5kLXR5cGVzY3JpcHQvYmFzZS1jb250cmFjdC5kLnRzOjpCYXNlQ29udHJhY3QuY2xlYXJTdGF0ZVByb2dyYW0oKSAtPiB1aW50NjQ6Cm1haW46CiAgICBwdXNoaW50IDEgLy8gMQogICAgcmV0dXJuCg=="},"byteCode":{"approval":"CyADCAABgAQk4AyANhoAjgEAAQAxGRQxGBQQREIAADYaAUkVIhJEFzYaAkcCI1lJTgIiC4ECCEwVEkQjSUsCDEEASEsCVwIASwFJTgIiCyJYsYAEHy8BCbIashojshlLBLIYgQayECOyAbO0PklXBABMVwAEgAQVH3x1EkRJFYEaEkSwJAhFAUL/sYAeFR98dQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsCRD","clear":"C4EBQw=="},"events":[],"templateVariables":{}} as unknown as Arc56Contract
+export const APP_SPEC: Arc56Contract = {"name":"RetiReader","structs":{"PoolInfo":[{"name":"poolAppId","type":"uint64"},{"name":"totalStakers","type":"uint16"},{"name":"totalAlgoStaked","type":"uint64"}],"ValidatorCurState":[{"name":"numPools","type":"uint16"},{"name":"totalStakers","type":"uint64"},{"name":"totalAlgoStaked","type":"uint64"},{"name":"rewardTokenHeldBack","type":"uint64"}],"ValidatorPoolInfo":[{"name":"validatorId","type":"uint64"},{"name":"poolInfo","type":"PoolInfo"}]},"methods":[{"name":"getValidatorStates","args":[{"type":"uint64","name":"registryAppId"},{"type":"uint64[]","name":"validatorIds"}],"returns":{"type":"(uint16,uint64,uint64,uint64)","struct":"ValidatorCurState"},"actions":{"create":["NoOp"],"call":["NoOp"]},"readonly":true,"events":[],"recommendations":{}},{"name":"getPools","args":[{"type":"uint64","name":"registryAppId"},{"type":"uint64[]","name":"validatorIds"}],"returns":{"type":"(uint64,(uint64,uint16,uint64))","struct":"ValidatorPoolInfo"},"actions":{"create":["NoOp"],"call":["NoOp"]},"readonly":true,"events":[],"recommendations":{}}],"arcs":[22,28],"networks":{},"state":{"schema":{"global":{"ints":0,"bytes":0},"local":{"ints":0,"bytes":0}},"keys":{"global":{},"local":{},"box":{}},"maps":{"global":{},"local":{},"box":{}}},"bareActions":{"create":[],"call":[]},"sourceInfo":{"approval":{"sourceInfo":[{"pc":[158,272],"errorMessage":"Bytes has valid prefix"},{"pc":[48],"errorMessage":"OnCompletion must be NoOp"},{"pc":[119,227,314],"errorMessage":"index access is out of bounds"},{"pc":[86,197,275],"errorMessage":"invalid array length header"},{"pc":[164],"errorMessage":"invalid number of bytes for ValidatorCurState"},{"pc":[287],"errorMessage":"invalid number of bytes for arc4.dynamic_array<PoolInfo>"},{"pc":[97,208],"errorMessage":"invalid number of bytes for arc4.dynamic_array<uint64>"},{"pc":[78,189],"errorMessage":"invalid number of bytes for arc4.uint64"}],"pcOffsetMethod":"none"},"clear":{"sourceInfo":[],"pcOffsetMethod":"none"}},"source":{"approval":"I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBAYWxnb3JhbmRmb3VuZGF0aW9uL2FsZ29yYW5kLXR5cGVzY3JpcHQvYXJjNC9pbmRleC5kLnRzOjpDb250cmFjdC5hcHByb3ZhbFByb2dyYW0oKSAtPiB1aW50NjQ6Cm1haW46CiAgICBpbnRjYmxvY2sgMCA4IDEgMgogICAgYnl0ZWNibG9jayAweDE1MWY3Yzc1IDB4MTUxZjdjNzUwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwCiAgICAvLyBzbWFydF9jb250cmFjdHMvcmV0aV9yZWFkZXIvY29udHJhY3QuYWxnby50czoxMQogICAgLy8gZXhwb3J0IGNsYXNzIFJldGlSZWFkZXIgZXh0ZW5kcyBDb250cmFjdCB7CiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICBhc3NlcnQgLy8gT25Db21wbGV0aW9uIG11c3QgYmUgTm9PcAogICAgcHVzaGJ5dGVzcyAweDI0ZTAwYzgwIDB4YmI4ODI5MjcgLy8gbWV0aG9kICJnZXRWYWxpZGF0b3JTdGF0ZXModWludDY0LHVpbnQ2NFtdKSh1aW50MTYsdWludDY0LHVpbnQ2NCx1aW50NjQpIiwgbWV0aG9kICJnZXRQb29scyh1aW50NjQsdWludDY0W10pKHVpbnQ2NCwodWludDY0LHVpbnQxNix1aW50NjQpKSIKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDAKICAgIG1hdGNoIGdldFZhbGlkYXRvclN0YXRlcyBnZXRQb29scwogICAgZXJyCgoKLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6OlJldGlSZWFkZXIuZ2V0VmFsaWRhdG9yU3RhdGVzW3JvdXRpbmddKCkgLT4gdm9pZDoKZ2V0VmFsaWRhdG9yU3RhdGVzOgogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MTIKICAgIC8vIEBhYmltZXRob2QoeyByZWFkb25seTogdHJ1ZSwgb25DcmVhdGU6ICJhbGxvdyIgfSkKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDEKICAgIGR1cAogICAgbGVuCiAgICBpbnRjXzEgLy8gOAogICAgPT0KICAgIGFzc2VydCAvLyBpbnZhbGlkIG51bWJlciBvZiBieXRlcyBmb3IgYXJjNC51aW50NjQKICAgIGJ0b2kKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDIKICAgIGR1cG4gMgogICAgaW50Y18wIC8vIDAKICAgIGV4dHJhY3RfdWludDE2IC8vIG9uIGVycm9yOiBpbnZhbGlkIGFycmF5IGxlbmd0aCBoZWFkZXIKICAgIGR1cAogICAgY292ZXIgMgogICAgaW50Y18xIC8vIDgKICAgICoKICAgIGludGNfMyAvLyAyCiAgICArCiAgICBzd2FwCiAgICBsZW4KICAgID09CiAgICBhc3NlcnQgLy8gaW52YWxpZCBudW1iZXIgb2YgYnl0ZXMgZm9yIGFyYzQuZHluYW1pY19hcnJheTx1aW50NjQ+CiAgICBpbnRjXzAgLy8gMAoKZ2V0VmFsaWRhdG9yU3RhdGVzX2Zvcl9oZWFkZXJAMjoKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9yZXRpX3JlYWRlci9jb250cmFjdC5hbGdvLnRzOjE0CiAgICAvLyBmb3IgKGNvbnN0IHZhbGlkYXRvcklkIG9mIHZhbGlkYXRvcklkcykgewogICAgZHVwCiAgICBkaWcgMgogICAgPAogICAgYnogZ2V0VmFsaWRhdG9yU3RhdGVzX2FmdGVyX2ZvckA2CiAgICBkaWcgMgogICAgZXh0cmFjdCAyIDAKICAgIGRpZyAxCiAgICBkdXAKICAgIGNvdmVyIDIKICAgIGludGNfMSAvLyA4CiAgICAqCiAgICBpbnRjXzEgLy8gOAogICAgZXh0cmFjdDMgLy8gb24gZXJyb3I6IGluZGV4IGFjY2VzcyBpcyBvdXQgb2YgYm91bmRzCiAgICAvLyBzbWFydF9jb250cmFjdHMvcmV0aV9yZWFkZXIvY29udHJhY3QuYWxnby50czoxNS0xOAogICAgLy8gY29uc3QgeyByZXR1cm5WYWx1ZSB9ID0gY29tcGlsZUFyYzQoUmV0aSkuY2FsbC5nZXRWYWxpZGF0b3JTdGF0ZSh7CiAgICAvLyAgIGFwcElkOiByZWdpc3RyeUFwcElkLAogICAgLy8gICBhcmdzOiBbdmFsaWRhdG9ySWRdLAogICAgLy8gfSk7CiAgICBpdHhuX2JlZ2luCiAgICBwdXNoYnl0ZXMgMHgxZjJmMDEwOSAvLyBtZXRob2QgImdldFZhbGlkYXRvclN0YXRlKHVpbnQ2NCkodWludDE2LHVpbnQ2NCx1aW50NjQsdWludDY0KSIKICAgIGl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCiAgICBpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwogICAgaW50Y18wIC8vIDAKICAgIGl0eG5fZmllbGQgT25Db21wbGV0aW9uCiAgICBkaWcgNAogICAgaXR4bl9maWVsZCBBcHBsaWNhdGlvbklECiAgICBwdXNoaW50IDYgLy8gYXBwbAogICAgaXR4bl9maWVsZCBUeXBlRW51bQogICAgaW50Y18wIC8vIDAKICAgIGl0eG5fZmllbGQgRmVlCiAgICBpdHhuX3N1Ym1pdAogICAgaXR4biBMYXN0TG9nCiAgICBkdXAKICAgIGV4dHJhY3QgNCAwCiAgICBzd2FwCiAgICBleHRyYWN0IDAgNAogICAgYnl0ZWNfMCAvLyAweDE1MWY3Yzc1CiAgICA9PQogICAgYXNzZXJ0IC8vIEJ5dGVzIGhhcyB2YWxpZCBwcmVmaXgKICAgIGR1cAogICAgbGVuCiAgICBwdXNoaW50IDI2IC8vIDI2CiAgICA9PQogICAgYXNzZXJ0IC8vIGludmFsaWQgbnVtYmVyIG9mIGJ5dGVzIGZvciBWYWxpZGF0b3JDdXJTdGF0ZQogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MTkKICAgIC8vIGxvZyhlbmNvZGVBcmM0KHJldHVyblZhbHVlKSk7CiAgICBsb2cKICAgIGludGNfMiAvLyAxCiAgICArCiAgICBidXJ5IDEKICAgIGIgZ2V0VmFsaWRhdG9yU3RhdGVzX2Zvcl9oZWFkZXJAMgoKZ2V0VmFsaWRhdG9yU3RhdGVzX2FmdGVyX2ZvckA2OgogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MTIKICAgIC8vIEBhYmltZXRob2QoeyByZWFkb25seTogdHJ1ZSwgb25DcmVhdGU6ICJhbGxvdyIgfSkKICAgIGJ5dGVjXzEgLy8gMHgxNTFmN2M3NTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAKICAgIGxvZwogICAgaW50Y18yIC8vIDEKICAgIHJldHVybgoKCi8vIHNtYXJ0X2NvbnRyYWN0cy9yZXRpX3JlYWRlci9jb250cmFjdC5hbGdvLnRzOjpSZXRpUmVhZGVyLmdldFBvb2xzW3JvdXRpbmddKCkgLT4gdm9pZDoKZ2V0UG9vbHM6CiAgICBpbnRjXzAgLy8gMAogICAgZHVwCiAgICBwdXNoYnl0ZXMgIiIKICAgIGR1cAogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MjkKICAgIC8vIEBhYmltZXRob2QoeyByZWFkb25seTogdHJ1ZSwgb25DcmVhdGU6ICJhbGxvdyIgfSkKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDEKICAgIGR1cAogICAgbGVuCiAgICBpbnRjXzEgLy8gOAogICAgPT0KICAgIGFzc2VydCAvLyBpbnZhbGlkIG51bWJlciBvZiBieXRlcyBmb3IgYXJjNC51aW50NjQKICAgIGJ0b2kKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDIKICAgIGR1cG4gMgogICAgaW50Y18wIC8vIDAKICAgIGV4dHJhY3RfdWludDE2IC8vIG9uIGVycm9yOiBpbnZhbGlkIGFycmF5IGxlbmd0aCBoZWFkZXIKICAgIGR1cAogICAgY292ZXIgMgogICAgaW50Y18xIC8vIDgKICAgICoKICAgIGludGNfMyAvLyAyCiAgICArCiAgICBzd2FwCiAgICBsZW4KICAgID09CiAgICBhc3NlcnQgLy8gaW52YWxpZCBudW1iZXIgb2YgYnl0ZXMgZm9yIGFyYzQuZHluYW1pY19hcnJheTx1aW50NjQ+CiAgICBpbnRjXzAgLy8gMAoKZ2V0UG9vbHNfZm9yX2hlYWRlckAyOgogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MzEKICAgIC8vIGZvciAoY29uc3QgdmFsaWRhdG9ySWQgb2YgdmFsaWRhdG9ySWRzKSB7CiAgICBkdXAKICAgIGRpZyAyCiAgICA8CiAgICBieiBnZXRQb29sc19hZnRlcl9mb3JAMTAKICAgIGRpZyAyCiAgICBleHRyYWN0IDIgMAogICAgZGlnIDEKICAgIGludGNfMSAvLyA4CiAgICAqCiAgICBpbnRjXzEgLy8gOAogICAgZXh0cmFjdDMgLy8gb24gZXJyb3I6IGluZGV4IGFjY2VzcyBpcyBvdXQgb2YgYm91bmRzCiAgICBkdXAKICAgIGJ1cnkgOQogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MzItMzUKICAgIC8vIGNvbnN0IHsgcmV0dXJuVmFsdWU6IHBvb2xJbmZvQXJyIH0gPSBjb21waWxlQXJjNChSZXRpKS5jYWxsLmdldFBvb2xzKHsKICAgIC8vICAgYXBwSWQ6IHJlZ2lzdHJ5QXBwSWQsCiAgICAvLyAgIGFyZ3M6IFt2YWxpZGF0b3JJZF0sCiAgICAvLyB9KTsKICAgIGl0eG5fYmVnaW4KICAgIHB1c2hieXRlcyAweDkxMGU5NGFjIC8vIG1ldGhvZCAiZ2V0UG9vbHModWludDY0KSh1aW50NjQsdWludDE2LHVpbnQ2NClbXSIKICAgIGl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCiAgICBpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwogICAgaW50Y18wIC8vIDAKICAgIGl0eG5fZmllbGQgT25Db21wbGV0aW9uCiAgICBkaWcgMwogICAgaXR4bl9maWVsZCBBcHBsaWNhdGlvbklECiAgICBwdXNoaW50IDYgLy8gYXBwbAogICAgaXR4bl9maWVsZCBUeXBlRW51bQogICAgaW50Y18wIC8vIDAKICAgIGl0eG5fZmllbGQgRmVlCiAgICBpdHhuX3N1Ym1pdAogICAgaXR4biBMYXN0TG9nCiAgICBkdXAKICAgIGJ1cnkgOAogICAgZHVwCiAgICBleHRyYWN0IDQgMAogICAgc3dhcAogICAgZXh0cmFjdCAwIDQKICAgIGJ5dGVjXzAgLy8gMHgxNTFmN2M3NQogICAgPT0KICAgIGFzc2VydCAvLyBCeXRlcyBoYXMgdmFsaWQgcHJlZml4CiAgICBkdXAKICAgIGludGNfMCAvLyAwCiAgICBleHRyYWN0X3VpbnQxNiAvLyBvbiBlcnJvcjogaW52YWxpZCBhcnJheSBsZW5ndGggaGVhZGVyCiAgICBkdXAKICAgIGJ1cnkgOAogICAgcHVzaGludCAxOCAvLyAxOAogICAgKgogICAgaW50Y18zIC8vIDIKICAgICsKICAgIHN3YXAKICAgIGxlbgogICAgPT0KICAgIGFzc2VydCAvLyBpbnZhbGlkIG51bWJlciBvZiBieXRlcyBmb3IgYXJjNC5keW5hbWljX2FycmF5PFBvb2xJbmZvPgogICAgaW50Y18wIC8vIDAKICAgIGJ1cnkgNQoKZ2V0UG9vbHNfZm9yX2hlYWRlckA1OgogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MzYKICAgIC8vIGZvciAoY29uc3QgcG9vbEluZm8gb2YgY2xvbmUocG9vbEluZm9BcnIpKSB7CiAgICBkaWcgNAogICAgZGlnIDYKICAgIDwKICAgIGJ6IGdldFBvb2xzX2FmdGVyX2ZvckA4CiAgICBkaWcgNgogICAgZXh0cmFjdCA2IDAKICAgIGRpZyA1CiAgICBkdXAKICAgIGNvdmVyIDIKICAgIHB1c2hpbnQgMTggLy8gMTgKICAgICoKICAgIHB1c2hpbnQgMTggLy8gMTgKICAgIGV4dHJhY3QzIC8vIG9uIGVycm9yOiBpbmRleCBhY2Nlc3MgaXMgb3V0IG9mIGJvdW5kcwogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MzcKICAgIC8vIGxvZyhlbmNvZGVBcmM0KHsgdmFsaWRhdG9ySWQsIHBvb2xJbmZvIH0pKTsKICAgIGRpZyA5CiAgICBzd2FwCiAgICBjb25jYXQKICAgIGxvZwogICAgaW50Y18yIC8vIDEKICAgICsKICAgIGJ1cnkgNQogICAgYiBnZXRQb29sc19mb3JfaGVhZGVyQDUKCmdldFBvb2xzX2FmdGVyX2ZvckA4OgogICAgZHVwCiAgICBpbnRjXzIgLy8gMQogICAgKwogICAgYnVyeSAxCiAgICBiIGdldFBvb2xzX2Zvcl9oZWFkZXJAMgoKZ2V0UG9vbHNfYWZ0ZXJfZm9yQDEwOgogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MjkKICAgIC8vIEBhYmltZXRob2QoeyByZWFkb25seTogdHJ1ZSwgb25DcmVhdGU6ICJhbGxvdyIgfSkKICAgIGJ5dGVjXzEgLy8gMHgxNTFmN2M3NTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAKICAgIGxvZwogICAgaW50Y18yIC8vIDEKICAgIHJldHVybgo=","clear":"I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBAYWxnb3JhbmRmb3VuZGF0aW9uL2FsZ29yYW5kLXR5cGVzY3JpcHQvYmFzZS1jb250cmFjdC5kLnRzOjpCYXNlQ29udHJhY3QuY2xlYXJTdGF0ZVByb2dyYW0oKSAtPiB1aW50NjQ6Cm1haW46CiAgICBwdXNoaW50IDEgLy8gMQogICAgcmV0dXJuCg=="},"byteCode":{"approval":"CyAEAAgBAiYCBBUffHUeFR98dQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMRkURIICBCTgDIAEu4gpJzYaAI4CAAEAawA2GgFJFSMSRBc2GgJHAiJZSU4CIwslCEwVEkQiSUsCDEEAQ0sCVwIASwFJTgIjCyNYsYAEHy8BCbIashoishlLBLIYgQayECKyAbO0PklXBABMVwAEKBJESRWBGhJEsCQIRQFC/7YpsCRDIkmAAEk2GgFJFSMSRBc2GgJHAiJZSU4CIwslCEwVEkQiSUsCDEEAdksCVwIASwEjCyNYSUUJsYAEkQ6UrLIashoishlLA7IYgQayECKyAbO0PklFCElXBABMVwAEKBJESSJZSUUIgRILJQhMFRJEIkUFSwRLBgxBABxLBlcGAEsFSU4CgRILgRJYSwlMULAkCEUFQv/cSSQIRQFC/4MpsCRD","clear":"C4EBQw=="},"events":[],"templateVariables":{}} as unknown as Arc56Contract
 
 /**
  * A state record containing binary data
@@ -64,6 +64,20 @@ export type Expand<T> = T extends (...args: infer A) => infer R
 
 // Type definitions for ARC-56 structs
 
+export type PoolInfo = {
+  poolAppId: bigint,
+  totalStakers: number,
+  totalAlgoStaked: bigint
+}
+
+
+/**
+ * Converts the ABI tuple representation of a PoolInfo to the struct representation
+ */
+export function PoolInfoFromTuple(abiTuple: [bigint, number, bigint]) {
+  return getABIStructFromABITuple(abiTuple, APP_SPEC.structs.PoolInfo, APP_SPEC.structs) as PoolInfo
+}
+
 export type ValidatorCurState = {
   numPools: number,
   totalStakers: bigint,
@@ -79,6 +93,19 @@ export function ValidatorCurStateFromTuple(abiTuple: [number, bigint, bigint, bi
   return getABIStructFromABITuple(abiTuple, APP_SPEC.structs.ValidatorCurState, APP_SPEC.structs) as ValidatorCurState
 }
 
+export type ValidatorPoolInfo = {
+  validatorId: bigint,
+  poolInfo: PoolInfo
+}
+
+
+/**
+ * Converts the ABI tuple representation of a ValidatorPoolInfo to the struct representation
+ */
+export function ValidatorPoolInfoFromTuple(abiTuple: [bigint, [bigint, number, bigint]]) {
+  return getABIStructFromABITuple(abiTuple, APP_SPEC.structs.ValidatorPoolInfo, APP_SPEC.structs) as ValidatorPoolInfo
+}
+
 /**
  * The argument types for the RetiReader contract
  */
@@ -91,12 +118,17 @@ export type RetiReaderArgs = {
       registryAppId: bigint | number
       validatorIds: bigint[] | number[]
     }
+    'getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))': {
+      registryAppId: bigint | number
+      validatorIds: bigint[] | number[]
+    }
   }
   /**
    * The tuple representation of the arguments for each method
    */
   tuple: {
     'getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)': [registryAppId: bigint | number, validatorIds: bigint[] | number[]]
+    'getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))': [registryAppId: bigint | number, validatorIds: bigint[] | number[]]
   }
 }
 
@@ -105,6 +137,7 @@ export type RetiReaderArgs = {
  */
 export type RetiReaderReturns = {
   'getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)': ValidatorCurState
+  'getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))': ValidatorPoolInfo
 }
 
 /**
@@ -119,6 +152,11 @@ export type RetiReaderTypes = {
       argsObj: RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']
       argsTuple: RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']
       returns: RetiReaderReturns['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']
+    }>
+    & Record<'getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))' | 'getPools', {
+      argsObj: RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']
+      argsTuple: RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']
+      returns: RetiReaderReturns['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']
     }>
 }
 
@@ -156,6 +194,8 @@ export type MethodReturn<TSignature extends RetiReaderSignatures> = RetiReaderTy
 export type RetiReaderCreateCallParams =
   | Expand<CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & {method: 'getValidatorStates'} & {onComplete?: OnApplicationComplete.NoOpOC} & CreateSchema>
   | Expand<CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & {method: 'getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'} & {onComplete?: OnApplicationComplete.NoOpOC} & CreateSchema>
+  | Expand<CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & {method: 'getPools'} & {onComplete?: OnApplicationComplete.NoOpOC} & CreateSchema>
+  | Expand<CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & {method: 'getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'} & {onComplete?: OnApplicationComplete.NoOpOC} & CreateSchema>
 /**
  * Defines arguments required for the deploy method.
  */
@@ -181,6 +221,9 @@ export abstract class RetiReaderParamsFactory {
           case 'getValidatorStates':
           case 'getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)':
             return RetiReaderParamsFactory.create.getValidatorStates(params)
+          case 'getPools':
+          case 'getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))':
+            return RetiReaderParamsFactory.create.getPools(params)
         }
         throw new Error(`Unknown ' + verb + ' method`)
       },
@@ -198,9 +241,48 @@ export abstract class RetiReaderParamsFactory {
           args: Array.isArray(params.args) ? params.args : [params.args.registryAppId, params.args.validatorIds],
         }
       },
+      /**
+       * Constructs create ABI call params for the RetiReader smart contract using the getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64)) ABI method
+       *
+       * @param params Parameters for the call
+       * @returns An `AppClientMethodCallParams` object for the call
+       */
+      getPools(params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & AppClientCompilationParams & {onComplete?: OnApplicationComplete.NoOpOC}): AppClientMethodCallParams & AppClientCompilationParams & {onComplete?: OnApplicationComplete.NoOpOC} {
+        return {
+          ...params,
+          method: 'getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))' as const,
+          args: Array.isArray(params.args) ? params.args : [params.args.registryAppId, params.args.validatorIds],
+        }
+      },
     }
   }
 
+  /**
+   * Constructs a no op call for the getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64) ABI method
+   *
+   * @param params Parameters for the call
+   * @returns An `AppClientMethodCallParams` object for the call
+   */
+  static getValidatorStates(params: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & CallOnComplete): AppClientMethodCallParams & CallOnComplete {
+    return {
+      ...params,
+      method: 'getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)' as const,
+      args: Array.isArray(params.args) ? params.args : [params.args.registryAppId, params.args.validatorIds],
+    }
+  }
+  /**
+   * Constructs a no op call for the getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64)) ABI method
+   *
+   * @param params Parameters for the call
+   * @returns An `AppClientMethodCallParams` object for the call
+   */
+  static getPools(params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & CallOnComplete): AppClientMethodCallParams & CallOnComplete {
+    return {
+      ...params,
+      method: 'getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))' as const,
+      args: Array.isArray(params.args) ? params.args : [params.args.registryAppId, params.args.validatorIds],
+    }
+  }
 }
 
 /**
@@ -297,6 +379,15 @@ class RetiReaderFactory {
       getValidatorStates: (params: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & AppClientCompilationParams & CreateSchema & {onComplete?: OnApplicationComplete.NoOpOC}) => {
         return this.appFactory.params.create(RetiReaderParamsFactory.create.getValidatorStates(params))
       },
+      /**
+       * Creates a new instance of the RetiReader smart contract using the getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64)) ABI method.
+       *
+       * @param params The params for the smart contract call
+       * @returns The create params
+       */
+      getPools: (params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & AppClientCompilationParams & CreateSchema & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+        return this.appFactory.params.create(RetiReaderParamsFactory.create.getPools(params))
+      },
     },
 
   }
@@ -317,6 +408,15 @@ class RetiReaderFactory {
        */
       getValidatorStates: (params: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & AppClientCompilationParams & CreateSchema & {onComplete?: OnApplicationComplete.NoOpOC}) => {
         return this.appFactory.createTransaction.create(RetiReaderParamsFactory.create.getValidatorStates(params))
+      },
+      /**
+       * Creates a new instance of the RetiReader smart contract using the getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64)) ABI method.
+       *
+       * @param params The params for the smart contract call
+       * @returns The create transaction
+       */
+      getPools: (params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & AppClientCompilationParams & CreateSchema & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+        return this.appFactory.createTransaction.create(RetiReaderParamsFactory.create.getPools(params))
       },
     },
 
@@ -339,6 +439,16 @@ class RetiReaderFactory {
       getValidatorStates: async (params: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & AppClientCompilationParams & CreateSchema & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
         const result = await this.appFactory.send.create(RetiReaderParamsFactory.create.getValidatorStates(params))
         return { result: { ...result.result, return: result.result.return as unknown as (undefined | RetiReaderReturns['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']) }, appClient: new RetiReaderClient(result.appClient) }
+      },
+      /**
+       * Creates a new instance of the RetiReader smart contract using an ABI method call using the getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64)) ABI method.
+       *
+       * @param params The params for the smart contract call
+       * @returns The create result
+       */
+      getPools: async (params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & AppClientCompilationParams & CreateSchema & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+        const result = await this.appFactory.send.create(RetiReaderParamsFactory.create.getPools(params))
+        return { result: { ...result.result, return: result.result.return as unknown as (undefined | RetiReaderReturns['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']) }, appClient: new RetiReaderClient(result.appClient) }
       },
     },
 
@@ -442,6 +552,30 @@ class RetiReaderClient {
       return this.appClient.params.bare.clearState(params)
     },
 
+    /**
+     * Makes a call to the RetiReader smart contract using the `getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)` ABI method.
+     * 
+     * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call params
+     */
+    getValidatorStates: (params: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+      return this.appClient.params.call(RetiReaderParamsFactory.getValidatorStates(params))
+    },
+
+    /**
+     * Makes a call to the RetiReader smart contract using the `getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))` ABI method.
+     * 
+     * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call params
+     */
+    getPools: (params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+      return this.appClient.params.call(RetiReaderParamsFactory.getPools(params))
+    },
+
   }
 
   /**
@@ -456,6 +590,30 @@ class RetiReaderClient {
      */
     clearState: (params?: Expand<AppClientBareCallParams>) => {
       return this.appClient.createTransaction.bare.clearState(params)
+    },
+
+    /**
+     * Makes a call to the RetiReader smart contract using the `getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)` ABI method.
+     * 
+     * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call transaction
+     */
+    getValidatorStates: (params: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+      return this.appClient.createTransaction.call(RetiReaderParamsFactory.getValidatorStates(params))
+    },
+
+    /**
+     * Makes a call to the RetiReader smart contract using the `getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))` ABI method.
+     * 
+     * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call transaction
+     */
+    getPools: (params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+      return this.appClient.createTransaction.call(RetiReaderParamsFactory.getPools(params))
     },
 
   }
@@ -474,6 +632,32 @@ class RetiReaderClient {
       return this.appClient.send.bare.clearState(params)
     },
 
+    /**
+     * Makes a call to the RetiReader smart contract using the `getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)` ABI method.
+     * 
+     * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call result
+     */
+    getValidatorStates: async (params: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+      const result = await this.appClient.send.call(RetiReaderParamsFactory.getValidatorStates(params))
+      return {...result, return: result.return as unknown as (undefined | RetiReaderReturns['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'])}
+    },
+
+    /**
+     * Makes a call to the RetiReader smart contract using the `getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))` ABI method.
+     * 
+     * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call result
+     */
+    getPools: async (params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+      const result = await this.appClient.send.call(RetiReaderParamsFactory.getPools(params))
+      return {...result, return: result.return as unknown as (undefined | RetiReaderReturns['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'])}
+    },
+
   }
 
   /**
@@ -484,6 +668,32 @@ class RetiReaderClient {
    */
   public clone(params: CloneAppClientParams) {
     return new RetiReaderClient(this.appClient.clone(params))
+  }
+
+  /**
+   * Makes a readonly (simulated) call to the RetiReader smart contract using the `getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)` ABI method.
+   * 
+   * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+   *
+   * @param params The params for the smart contract call
+   * @returns The call result
+   */
+  async getValidatorStates(params: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']>) {
+    const result = await this.appClient.send.call(RetiReaderParamsFactory.getValidatorStates(params))
+    return result.return as unknown as RetiReaderReturns['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']
+  }
+
+  /**
+   * Makes a readonly (simulated) call to the RetiReader smart contract using the `getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))` ABI method.
+   * 
+   * This method is a readonly method; calling it with onComplete of NoOp will result in a simulated transaction rather than a real transaction.
+   *
+   * @param params The params for the smart contract call
+   * @returns The call result
+   */
+  async getPools(params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']>) {
+    const result = await this.appClient.send.call(RetiReaderParamsFactory.getPools(params))
+    return result.return as unknown as RetiReaderReturns['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']
   }
 
   /**
@@ -498,6 +708,22 @@ class RetiReaderClient {
     let promiseChain:Promise<unknown> = Promise.resolve()
     const resultMappers: Array<undefined | ((x: ABIReturn | undefined) => any)> = []
     return {
+      /**
+       * Add a getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64) method call against the RetiReader contract
+       */
+      getValidatorStates(params: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']> & {onComplete?: OnApplicationComplete.NoOpOC}) {
+        promiseChain = promiseChain.then(async () => composer.addAppCallMethodCall(await client.params.getValidatorStates(params)))
+        resultMappers.push((v) => client.decodeReturnValue('getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)', v))
+        return this
+      },
+      /**
+       * Add a getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64)) method call against the RetiReader contract
+       */
+      getPools(params: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']> & {onComplete?: OnApplicationComplete.NoOpOC}) {
+        promiseChain = promiseChain.then(async () => composer.addAppCallMethodCall(await client.params.getPools(params)))
+        resultMappers.push((v) => client.decodeReturnValue('getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))', v))
+        return this
+      },
       /**
        * Add a clear state call to the RetiReader contract
        */
@@ -533,6 +759,24 @@ class RetiReaderClient {
   }
 }
 export type RetiReaderComposer<TReturns extends [...any[]] = []> = {
+  /**
+   * Calls the getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64) ABI method.
+   *
+   * @param args The arguments for the contract call
+   * @param params Any additional parameters for the call
+   * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
+   */
+  getValidatorStates(params?: CallParams<RetiReaderArgs['obj']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | RetiReaderArgs['tuple']['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)']>): RetiReaderComposer<[...TReturns, RetiReaderReturns['getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)'] | undefined]>
+
+  /**
+   * Calls the getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64)) ABI method.
+   *
+   * @param args The arguments for the contract call
+   * @param params Any additional parameters for the call
+   * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
+   */
+  getPools(params?: CallParams<RetiReaderArgs['obj']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | RetiReaderArgs['tuple']['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))']>): RetiReaderComposer<[...TReturns, RetiReaderReturns['getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))'] | undefined]>
+
   /**
    * Makes a clear_state call to an existing instance of the RetiReader smart contract.
    *
@@ -660,6 +904,22 @@ export class RetiReaderSDK extends GhostBase {
     return this.execute({
       transactions,
       signature: 'getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)',
+      extraSimulateArgs,
+    })
+  }
+
+  async getPools(
+    args: Methods['getPools']['argsObj'],
+    extraMethodCallArgs?: ExtraMethodCallArgs,
+    extraSimulateArgs?: RawSimulateOptions,
+  ): Promise<Methods['getPools']['returns'][]> {
+    const { transactions } = await this.factory.createTransaction.create.getPools({
+      args,
+      ...extraMethodCallArgs,
+    })
+    return this.execute({
+      transactions,
+      signature: 'getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))',
       extraSimulateArgs,
     })
   }

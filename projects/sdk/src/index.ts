@@ -1,5 +1,5 @@
 import { AlgorandClient } from "@algorandfoundation/algokit-utils"
-import { RetiReaderSDK, ValidatorCurState } from "./generated/RetiReaderSDK.js"
+import { RetiReaderSDK, ValidatorCurState, ValidatorPoolInfo } from "./generated/RetiReaderSDK.js"
 import { chunked } from "./utils/chunked.js"
 
 export class RetiFastSDK {
@@ -17,5 +17,20 @@ export class RetiFastSDK {
   async getValidatorStates(validatorIds: number[] | bigint[]): Promise<ValidatorCurState[]> {
     const extraFee = (1000 * validatorIds.length).microAlgo()
     return this.ghostSDK.getValidatorStates({ registryAppId: this.registryAppId, validatorIds }, { extraFee })
+  }
+
+  async getPools(validatorIds: number[] | bigint[]): Promise<ValidatorPoolInfo["poolInfo"][][]> {
+    const results = await this._internal_getPoolInfo(validatorIds)
+    return validatorIds.map((vid) =>
+      results
+        .filter((r) => r.validatorId === BigInt(vid))
+        .map((r) => r.poolInfo)
+    )
+  }
+
+  @chunked(127)
+  private async _internal_getPoolInfo(validatorIds: number[] | bigint[]): Promise<ValidatorPoolInfo[]> {
+    const extraFee = (1000 * validatorIds.length).microAlgo()
+    return this.ghostSDK.getPools({ registryAppId: this.registryAppId, validatorIds }, { extraFee })
   }
 }

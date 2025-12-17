@@ -3,55 +3,48 @@
 
 // @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
 main:
-    intcblock 8 0 1
-    // smart_contracts/reti_reader/contract.algo.ts:5
+    intcblock 0 8 1 2
+    bytecblock 0x151f7c75 0x151f7c750000000000000000000000000000000000000000000000000000
+    // smart_contracts/reti_reader/contract.algo.ts:11
     // export class RetiReader extends Contract {
-    pushbytes 0x24e00c80 // method "getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)"
-    txna ApplicationArgs 0
-    match main_getValidatorStates_route@2
-    err
-
-main_getValidatorStates_route@2:
-    // smart_contracts/reti_reader/contract.algo.ts:6
-    // @abimethod({ readonly: true, onCreate: 'require' })
     txn OnCompletion
     !
-    txn ApplicationID
-    !
-    &&
-    assert // OnCompletion must be NoOp && can only call when creating
-    b getValidatorStates
+    assert // OnCompletion must be NoOp
+    pushbytess 0x24e00c80 0xbb882927 // method "getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)", method "getPools(uint64,uint64[])(uint64,(uint64,uint16,uint64))"
+    txna ApplicationArgs 0
+    match getValidatorStates getPools
+    err
 
 
 // smart_contracts/reti_reader/contract.algo.ts::RetiReader.getValidatorStates[routing]() -> void:
 getValidatorStates:
-    // smart_contracts/reti_reader/contract.algo.ts:6
-    // @abimethod({ readonly: true, onCreate: 'require' })
+    // smart_contracts/reti_reader/contract.algo.ts:12
+    // @abimethod({ readonly: true, onCreate: "allow" })
     txna ApplicationArgs 1
     dup
     len
-    intc_0 // 8
+    intc_1 // 8
     ==
     assert // invalid number of bytes for arc4.uint64
     btoi
     txna ApplicationArgs 2
     dupn 2
-    intc_1 // 0
+    intc_0 // 0
     extract_uint16 // on error: invalid array length header
     dup
     cover 2
-    intc_0 // 8
+    intc_1 // 8
     *
-    pushint 2 // 2
+    intc_3 // 2
     +
     swap
     len
     ==
     assert // invalid number of bytes for arc4.dynamic_array<uint64>
-    intc_1 // 0
+    intc_0 // 0
 
 getValidatorStates_for_header@2:
-    // smart_contracts/reti_reader/contract.algo.ts:8
+    // smart_contracts/reti_reader/contract.algo.ts:14
     // for (const validatorId of validatorIds) {
     dup
     dig 2
@@ -62,11 +55,11 @@ getValidatorStates_for_header@2:
     dig 1
     dup
     cover 2
-    intc_0 // 8
+    intc_1 // 8
     *
-    intc_0 // 8
+    intc_1 // 8
     extract3 // on error: index access is out of bounds
-    // smart_contracts/reti_reader/contract.algo.ts:9-12
+    // smart_contracts/reti_reader/contract.algo.ts:15-18
     // const { returnValue } = compileArc4(Reti).call.getValidatorState({
     //   appId: registryAppId,
     //   args: [validatorId],
@@ -75,13 +68,13 @@ getValidatorStates_for_header@2:
     pushbytes 0x1f2f0109 // method "getValidatorState(uint64)(uint16,uint64,uint64,uint64)"
     itxn_field ApplicationArgs
     itxn_field ApplicationArgs
-    intc_1 // 0
+    intc_0 // 0
     itxn_field OnCompletion
     dig 4
     itxn_field ApplicationID
     pushint 6 // appl
     itxn_field TypeEnum
-    intc_1 // 0
+    intc_0 // 0
     itxn_field Fee
     itxn_submit
     itxn LastLog
@@ -89,7 +82,7 @@ getValidatorStates_for_header@2:
     extract 4 0
     swap
     extract 0 4
-    pushbytes 0x151f7c75
+    bytec_0 // 0x151f7c75
     ==
     assert // Bytes has valid prefix
     dup
@@ -97,7 +90,7 @@ getValidatorStates_for_header@2:
     pushint 26 // 26
     ==
     assert // invalid number of bytes for ValidatorCurState
-    // smart_contracts/reti_reader/contract.algo.ts:13
+    // smart_contracts/reti_reader/contract.algo.ts:19
     // log(encodeArc4(returnValue));
     log
     intc_2 // 1
@@ -106,9 +99,143 @@ getValidatorStates_for_header@2:
     b getValidatorStates_for_header@2
 
 getValidatorStates_after_for@6:
-    // smart_contracts/reti_reader/contract.algo.ts:6
-    // @abimethod({ readonly: true, onCreate: 'require' })
-    pushbytes 0x151f7c750000000000000000000000000000000000000000000000000000
+    // smart_contracts/reti_reader/contract.algo.ts:12
+    // @abimethod({ readonly: true, onCreate: "allow" })
+    bytec_1 // 0x151f7c750000000000000000000000000000000000000000000000000000
+    log
+    intc_2 // 1
+    return
+
+
+// smart_contracts/reti_reader/contract.algo.ts::RetiReader.getPools[routing]() -> void:
+getPools:
+    intc_0 // 0
+    dup
+    pushbytes ""
+    dup
+    // smart_contracts/reti_reader/contract.algo.ts:29
+    // @abimethod({ readonly: true, onCreate: "allow" })
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 2
+    dupn 2
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    dup
+    cover 2
+    intc_1 // 8
+    *
+    intc_3 // 2
+    +
+    swap
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<uint64>
+    intc_0 // 0
+
+getPools_for_header@2:
+    // smart_contracts/reti_reader/contract.algo.ts:31
+    // for (const validatorId of validatorIds) {
+    dup
+    dig 2
+    <
+    bz getPools_after_for@10
+    dig 2
+    extract 2 0
+    dig 1
+    intc_1 // 8
+    *
+    intc_1 // 8
+    extract3 // on error: index access is out of bounds
+    dup
+    bury 9
+    // smart_contracts/reti_reader/contract.algo.ts:32-35
+    // const { returnValue: poolInfoArr } = compileArc4(Reti).call.getPools({
+    //   appId: registryAppId,
+    //   args: [validatorId],
+    // });
+    itxn_begin
+    pushbytes 0x910e94ac // method "getPools(uint64)(uint64,uint16,uint64)[]"
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    intc_0 // 0
+    itxn_field OnCompletion
+    dig 3
+    itxn_field ApplicationID
+    pushint 6 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    bury 8
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    bytec_0 // 0x151f7c75
+    ==
+    assert // Bytes has valid prefix
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    dup
+    bury 8
+    pushint 18 // 18
+    *
+    intc_3 // 2
+    +
+    swap
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<PoolInfo>
+    intc_0 // 0
+    bury 5
+
+getPools_for_header@5:
+    // smart_contracts/reti_reader/contract.algo.ts:36
+    // for (const poolInfo of clone(poolInfoArr)) {
+    dig 4
+    dig 6
+    <
+    bz getPools_after_for@8
+    dig 6
+    extract 6 0
+    dig 5
+    dup
+    cover 2
+    pushint 18 // 18
+    *
+    pushint 18 // 18
+    extract3 // on error: index access is out of bounds
+    // smart_contracts/reti_reader/contract.algo.ts:37
+    // log(encodeArc4({ validatorId, poolInfo }));
+    dig 9
+    swap
+    concat
+    log
+    intc_2 // 1
+    +
+    bury 5
+    b getPools_for_header@5
+
+getPools_after_for@8:
+    dup
+    intc_2 // 1
+    +
+    bury 1
+    b getPools_for_header@2
+
+getPools_after_for@10:
+    // smart_contracts/reti_reader/contract.algo.ts:29
+    // @abimethod({ readonly: true, onCreate: "allow" })
+    bytec_1 // 0x151f7c750000000000000000000000000000000000000000000000000000
     log
     intc_2 // 1
     return
