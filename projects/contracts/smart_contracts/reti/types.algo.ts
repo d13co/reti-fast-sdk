@@ -1,13 +1,13 @@
-import { uint64 } from "@algorandfoundation/algorand-typescript";
-import { Struct, StaticArray, Uint64, Uint8, Uint32, Uint16, Address, ARC4Encoded } from "@algorandfoundation/algorand-typescript/arc4";
+import { FixedArray, uint64 } from "@algorandfoundation/algorand-typescript";
+import { Uint64, Uint8, Uint32, Uint16, Address, ARC4Encoded } from "@algorandfoundation/algorand-typescript/arc4";
 
 export const MAX_POOLS_PER_NODE = 3; // max number of pools per node
 export const MAX_NODES = 8;
 
-export class NodeConfig extends Struct<{ poolAppIds: StaticArray<Uint64, typeof MAX_POOLS_PER_NODE> }> {}
+export type NodeConfig = { poolAppIds: FixedArray<Uint64, typeof MAX_POOLS_PER_NODE> };
 
 export type NodePoolAssignmentConfig = {
-  nodes: StaticArray<NodeConfig, typeof MAX_NODES>;
+  nodes: FixedArray<NodeConfig, typeof MAX_NODES>;
 };
 
 export type ValidatorConfig = {
@@ -17,7 +17,7 @@ export type ValidatorConfig = {
   nfdForInfo: uint64;
   entryGatingType: Uint8;
   entryGatingAddress: Address; // for GATING_TYPE_ASSETS_CREATED_BY
-  entryGatingAssets: StaticArray<Uint64, 4>; // all checked for GATING_TYPE_ASSET_ID, only first used for GATING_TYPE_CREATED_BY_NFD_ADDRESSES, and GATING_TYPE_SEGMENT_OF_NFD
+  entryGatingAssets: FixedArray<Uint64, 4>; // all checked for GATING_TYPE_ASSET_ID, only first used for GATING_TYPE_CREATED_BY_NFD_ADDRESSES, and GATING_TYPE_SEGMENT_OF_NFD
   gatingAssetMinBalance: uint64;
   rewardTokenId: uint64;
   rewardPerPayout: uint64;

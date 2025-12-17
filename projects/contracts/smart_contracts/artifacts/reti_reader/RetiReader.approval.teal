@@ -5,7 +5,7 @@
 main:
     intcblock 0 8 1 2
     bytecblock 0x151f7c75 0x151f7c750000000000000000000000000000000000000000000000000000
-    // smart_contracts/reti_reader/contract.algo.ts:23
+    // smart_contracts/reti_reader/contract.algo.ts:22
     // export class RetiReader extends Contract {
     txn OnCompletion
     !
@@ -18,7 +18,7 @@ main:
 
 // smart_contracts/reti_reader/contract.algo.ts::RetiReader.getValidatorConfig[routing]() -> void:
 getValidatorConfig:
-    // smart_contracts/reti_reader/contract.algo.ts:24
+    // smart_contracts/reti_reader/contract.algo.ts:23
     // @abimethod({ readonly: true, onCreate: "allow" })
     txna ApplicationArgs 1
     dup
@@ -44,7 +44,7 @@ getValidatorConfig:
     intc_0 // 0
 
 getValidatorConfig_for_header@2:
-    // smart_contracts/reti_reader/contract.algo.ts:26
+    // smart_contracts/reti_reader/contract.algo.ts:25
     // for (const validatorId of validatorIds) {
     dup
     dig 2
@@ -59,7 +59,7 @@ getValidatorConfig_for_header@2:
     *
     intc_1 // 8
     extract3 // on error: index access is out of bounds
-    // smart_contracts/reti_reader/contract.algo.ts:27-30
+    // smart_contracts/reti_reader/contract.algo.ts:26-29
     // const { returnValue } = compileArc4(Reti).call.getValidatorConfig({
     //   appId: registryAppId,
     //   args: [validatorId],
@@ -90,7 +90,7 @@ getValidatorConfig_for_header@2:
     pushint 242 // 242
     ==
     assert // invalid number of bytes for ValidatorConfig
-    // smart_contracts/reti_reader/contract.algo.ts:31
+    // smart_contracts/reti_reader/contract.algo.ts:30
     // log(encodeArc4(returnValue));
     log
     intc_2 // 1
@@ -99,7 +99,7 @@ getValidatorConfig_for_header@2:
     b getValidatorConfig_for_header@2
 
 getValidatorConfig_after_for@6:
-    // smart_contracts/reti_reader/contract.algo.ts:24
+    // smart_contracts/reti_reader/contract.algo.ts:23
     // @abimethod({ readonly: true, onCreate: "allow" })
     pushbytes base32(CUPXY5IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)
     log
@@ -109,7 +109,7 @@ getValidatorConfig_after_for@6:
 
 // smart_contracts/reti_reader/contract.algo.ts::RetiReader.getValidatorStates[routing]() -> void:
 getValidatorStates:
-    // smart_contracts/reti_reader/contract.algo.ts:55
+    // smart_contracts/reti_reader/contract.algo.ts:54
     // @abimethod({ readonly: true, onCreate: "allow" })
     txna ApplicationArgs 1
     dup
@@ -135,7 +135,7 @@ getValidatorStates:
     intc_0 // 0
 
 getValidatorStates_for_header@2:
-    // smart_contracts/reti_reader/contract.algo.ts:57
+    // smart_contracts/reti_reader/contract.algo.ts:56
     // for (const validatorId of validatorIds) {
     dup
     dig 2
@@ -150,7 +150,7 @@ getValidatorStates_for_header@2:
     *
     intc_1 // 8
     extract3 // on error: index access is out of bounds
-    // smart_contracts/reti_reader/contract.algo.ts:58-61
+    // smart_contracts/reti_reader/contract.algo.ts:57-60
     // const { returnValue } = compileArc4(Reti).call.getValidatorState({
     //   appId: registryAppId,
     //   args: [validatorId],
@@ -181,7 +181,7 @@ getValidatorStates_for_header@2:
     pushint 26 // 26
     ==
     assert // invalid number of bytes for ValidatorCurState
-    // smart_contracts/reti_reader/contract.algo.ts:62
+    // smart_contracts/reti_reader/contract.algo.ts:61
     // log(encodeArc4(returnValue));
     log
     intc_2 // 1
@@ -190,7 +190,7 @@ getValidatorStates_for_header@2:
     b getValidatorStates_for_header@2
 
 getValidatorStates_after_for@6:
-    // smart_contracts/reti_reader/contract.algo.ts:55
+    // smart_contracts/reti_reader/contract.algo.ts:54
     // @abimethod({ readonly: true, onCreate: "allow" })
     bytec_1 // 0x151f7c750000000000000000000000000000000000000000000000000000
     log
@@ -204,7 +204,7 @@ getPools:
     dup
     pushbytes ""
     dup
-    // smart_contracts/reti_reader/contract.algo.ts:72
+    // smart_contracts/reti_reader/contract.algo.ts:71
     // @abimethod({ readonly: true, onCreate: "allow" })
     txna ApplicationArgs 1
     dup
@@ -230,7 +230,7 @@ getPools:
     intc_0 // 0
 
 getPools_for_header@2:
-    // smart_contracts/reti_reader/contract.algo.ts:75
+    // smart_contracts/reti_reader/contract.algo.ts:74
     // for (const validatorId of validatorIds) {
     dup
     dig 2
@@ -245,7 +245,7 @@ getPools_for_header@2:
     extract3 // on error: index access is out of bounds
     dup
     bury 9
-    // smart_contracts/reti_reader/contract.algo.ts:76-79
+    // smart_contracts/reti_reader/contract.algo.ts:75-78
     // const { returnValue: poolInfoArr } = compileArc4(Reti).call.getPools({
     //   appId: registryAppId,
     //   args: [validatorId],
@@ -290,7 +290,7 @@ getPools_for_header@2:
     bury 5
 
 getPools_for_header@5:
-    // smart_contracts/reti_reader/contract.algo.ts:80
+    // smart_contracts/reti_reader/contract.algo.ts:79
     // for (const poolInfo of clone(poolInfoArr)) {
     dig 4
     dig 6
@@ -305,7 +305,7 @@ getPools_for_header@5:
     *
     pushint 18 // 18
     extract3 // on error: index access is out of bounds
-    // smart_contracts/reti_reader/contract.algo.ts:81
+    // smart_contracts/reti_reader/contract.algo.ts:80
     // log(encodeArc4({ validatorId, poolInfo }));
     dig 9
     swap
@@ -324,7 +324,7 @@ getPools_after_for@8:
     b getPools_for_header@2
 
 getPools_after_for@10:
-    // smart_contracts/reti_reader/contract.algo.ts:72
+    // smart_contracts/reti_reader/contract.algo.ts:71
     // @abimethod({ readonly: true, onCreate: "allow" })
     bytec_1 // 0x151f7c750000000000000000000000000000000000000000000000000000
     log
@@ -334,7 +334,7 @@ getPools_after_for@10:
 
 // smart_contracts/reti_reader/contract.algo.ts::RetiReader.getNodePoolAssignments[routing]() -> void:
 getNodePoolAssignments:
-    // smart_contracts/reti_reader/contract.algo.ts:95
+    // smart_contracts/reti_reader/contract.algo.ts:94
     // @abimethod({ readonly: true, onCreate: "allow" })
     txna ApplicationArgs 1
     dup
@@ -360,7 +360,7 @@ getNodePoolAssignments:
     intc_0 // 0
 
 getNodePoolAssignments_for_header@2:
-    // smart_contracts/reti_reader/contract.algo.ts:97
+    // smart_contracts/reti_reader/contract.algo.ts:96
     // for (const validatorId of validatorIds) {
     dup
     dig 2
@@ -375,7 +375,7 @@ getNodePoolAssignments_for_header@2:
     *
     intc_1 // 8
     extract3 // on error: index access is out of bounds
-    // smart_contracts/reti_reader/contract.algo.ts:98-101
+    // smart_contracts/reti_reader/contract.algo.ts:97-100
     // const { returnValue } = compileArc4(Reti).call.getNodePoolAssignments({
     //   appId: registryAppId,
     //   args: [validatorId],
@@ -406,7 +406,7 @@ getNodePoolAssignments_for_header@2:
     pushint 192 // 192
     ==
     assert // invalid number of bytes for NodePoolAssignmentConfig
-    // smart_contracts/reti_reader/contract.algo.ts:102
+    // smart_contracts/reti_reader/contract.algo.ts:101
     // log(encodeArc4(returnValue));
     log
     intc_2 // 1
@@ -415,7 +415,7 @@ getNodePoolAssignments_for_header@2:
     b getNodePoolAssignments_for_header@2
 
 getNodePoolAssignments_after_for@6:
-    // smart_contracts/reti_reader/contract.algo.ts:95
+    // smart_contracts/reti_reader/contract.algo.ts:94
     // @abimethod({ readonly: true, onCreate: "allow" })
     pushbytes 0x151f7c75000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     log

@@ -1,11 +1,10 @@
-import { clone, Contract, Global, log, uint64 } from "@algorandfoundation/algorand-typescript";
+import { clone, Contract, FixedArray, Global, log, uint64 } from "@algorandfoundation/algorand-typescript";
 import { NodeConfig, PoolInfo, ValidatorConfig, ValidatorCurState } from "../reti/types.algo";
 import {
   abimethod,
   Address,
   compileArc4,
   encodeArc4,
-  StaticArray,
   Uint16,
   Uint32,
   Uint64,
@@ -37,7 +36,7 @@ export class RetiReader extends Contract {
       nfdForInfo: 0,
       entryGatingType: new Uint8(0),
       entryGatingAddress: new Address(),
-      entryGatingAssets: new StaticArray(new Uint64(0), new Uint64(0), new Uint64(0), new Uint64(0)),
+      entryGatingAssets: new FixedArray(new Uint64(0), new Uint64(0), new Uint64(0), new Uint64(0)),
       gatingAssetMinBalance: 0,
       rewardTokenId: 0,
       rewardPerPayout: 0,
@@ -101,7 +100,7 @@ export class RetiReader extends Contract {
       });
       log(encodeArc4(returnValue));
     }
-    const n = new NodeConfig({ poolAppIds: new StaticArray(new Uint64(0), new Uint64(0), new Uint64(0)) })
-    return { nodes: new StaticArray(clone(n), clone(n), clone(n), clone(n), clone(n), clone(n), clone(n), clone(n)) };
+    const n: NodeConfig = { poolAppIds: new FixedArray(new Uint64(0), new Uint64(0), new Uint64(0)) }
+    return { nodes: new FixedArray(clone(n), clone(n), clone(n), clone(n), clone(n), clone(n), clone(n), clone(n)) };
   }
 }
