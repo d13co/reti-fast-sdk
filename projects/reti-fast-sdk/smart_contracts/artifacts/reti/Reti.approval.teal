@@ -1,0 +1,49 @@
+#pragma version 11
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    // smart_contracts/reti/contract.algo.ts:19
+    // export class Reti extends Contract {
+    txn NumAppArgs
+    bz main___algots__.defaultCreate@5
+    pushbytes 0x1f2f0109 // method "getValidatorState(uint64)(uint16,uint64,uint64,uint64)"
+    txna ApplicationArgs 0
+    match main_getValidatorState_route@3
+    err
+
+main_getValidatorState_route@3:
+    // smart_contracts/reti/contract.algo.ts:20
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    txn ApplicationID
+    &&
+    assert // OnCompletion must be NoOp && can only call when not creating
+    b getValidatorState
+
+main___algots__.defaultCreate@5:
+    // smart_contracts/reti/contract.algo.ts:19
+    // export class Reti extends Contract {
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    assert // OnCompletion must be NoOp && can only call when creating
+    pushint 1 // 1
+    return
+
+
+// smart_contracts/reti/contract.algo.ts::Reti.getValidatorState[routing]() -> void:
+getValidatorState:
+    // smart_contracts/reti/contract.algo.ts:20
+    // @abimethod({ readonly: true })
+    txna ApplicationArgs 1
+    len
+    pushint 8 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    // smart_contracts/reti/contract.algo.ts:22
+    // err('stub')
+    err // stub

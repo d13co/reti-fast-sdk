@@ -1,0 +1,81 @@
+{
+    "hints": {
+        "getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)": {
+            "read_only": true,
+            "call_config": {
+                "no_op": "CREATE"
+            },
+            "structs": {
+                "output": {
+                    "name": "ValidatorCurState",
+                    "elements": [
+                        [
+                            "numPools",
+                            "uint16"
+                        ],
+                        [
+                            "totalStakers",
+                            "uint64"
+                        ],
+                        [
+                            "totalAlgoStaked",
+                            "uint64"
+                        ],
+                        [
+                            "rewardTokenHeldBack",
+                            "uint64"
+                        ]
+                    ]
+                }
+            }
+        }
+    },
+    "source": {
+        "approval": "I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBAYWxnb3JhbmRmb3VuZGF0aW9uL2FsZ29yYW5kLXR5cGVzY3JpcHQvYXJjNC9pbmRleC5kLnRzOjpDb250cmFjdC5hcHByb3ZhbFByb2dyYW0oKSAtPiB1aW50NjQ6Cm1haW46CiAgICBpbnRjYmxvY2sgOCAwIDEKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9yZXRpX3JlYWRlci9jb250cmFjdC5hbGdvLnRzOjUKICAgIC8vIGV4cG9ydCBjbGFzcyBSZXRpUmVhZGVyIGV4dGVuZHMgQ29udHJhY3QgewogICAgcHVzaGJ5dGVzIDB4MjRlMDBjODAgLy8gbWV0aG9kICJnZXRWYWxpZGF0b3JTdGF0ZXModWludDY0LHVpbnQ2NFtdKSh1aW50MTYsdWludDY0LHVpbnQ2NCx1aW50NjQpIgogICAgdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAogICAgbWF0Y2ggbWFpbl9nZXRWYWxpZGF0b3JTdGF0ZXNfcm91dGVAMgogICAgZXJyCgptYWluX2dldFZhbGlkYXRvclN0YXRlc19yb3V0ZUAyOgogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6NgogICAgLy8gQGFiaW1ldGhvZCh7IHJlYWRvbmx5OiB0cnVlLCBvbkNyZWF0ZTogJ3JlcXVpcmUnIH0pCiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgIQogICAgJiYKICAgIGFzc2VydCAvLyBPbkNvbXBsZXRpb24gbXVzdCBiZSBOb09wICYmIGNhbiBvbmx5IGNhbGwgd2hlbiBjcmVhdGluZwogICAgYiBnZXRWYWxpZGF0b3JTdGF0ZXMKCgovLyBzbWFydF9jb250cmFjdHMvcmV0aV9yZWFkZXIvY29udHJhY3QuYWxnby50czo6UmV0aVJlYWRlci5nZXRWYWxpZGF0b3JTdGF0ZXNbcm91dGluZ10oKSAtPiB2b2lkOgpnZXRWYWxpZGF0b3JTdGF0ZXM6CiAgICAvLyBzbWFydF9jb250cmFjdHMvcmV0aV9yZWFkZXIvY29udHJhY3QuYWxnby50czo2CiAgICAvLyBAYWJpbWV0aG9kKHsgcmVhZG9ubHk6IHRydWUsIG9uQ3JlYXRlOiAncmVxdWlyZScgfSkKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDEKICAgIGR1cAogICAgbGVuCiAgICBpbnRjXzAgLy8gOAogICAgPT0KICAgIGFzc2VydCAvLyBpbnZhbGlkIG51bWJlciBvZiBieXRlcyBmb3IgYXJjNC51aW50NjQKICAgIGJ0b2kKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDIKICAgIGR1cG4gMgogICAgaW50Y18xIC8vIDAKICAgIGV4dHJhY3RfdWludDE2IC8vIG9uIGVycm9yOiBpbnZhbGlkIGFycmF5IGxlbmd0aCBoZWFkZXIKICAgIGR1cAogICAgY292ZXIgMgogICAgaW50Y18wIC8vIDgKICAgICoKICAgIHB1c2hpbnQgMiAvLyAyCiAgICArCiAgICBzd2FwCiAgICBsZW4KICAgID09CiAgICBhc3NlcnQgLy8gaW52YWxpZCBudW1iZXIgb2YgYnl0ZXMgZm9yIGFyYzQuZHluYW1pY19hcnJheTx1aW50NjQ+CiAgICBpbnRjXzEgLy8gMAoKZ2V0VmFsaWRhdG9yU3RhdGVzX2Zvcl9oZWFkZXJAMjoKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9yZXRpX3JlYWRlci9jb250cmFjdC5hbGdvLnRzOjgKICAgIC8vIGZvciAoY29uc3QgdmFsaWRhdG9ySWQgb2YgdmFsaWRhdG9ySWRzKSB7CiAgICBkdXAKICAgIGRpZyAyCiAgICA8CiAgICBieiBnZXRWYWxpZGF0b3JTdGF0ZXNfYWZ0ZXJfZm9yQDYKICAgIGRpZyAyCiAgICBleHRyYWN0IDIgMAogICAgZGlnIDEKICAgIGR1cAogICAgY292ZXIgMgogICAgaW50Y18wIC8vIDgKICAgICoKICAgIGludGNfMCAvLyA4CiAgICBleHRyYWN0MyAvLyBvbiBlcnJvcjogaW5kZXggYWNjZXNzIGlzIG91dCBvZiBib3VuZHMKICAgIC8vIHNtYXJ0X2NvbnRyYWN0cy9yZXRpX3JlYWRlci9jb250cmFjdC5hbGdvLnRzOjktMTIKICAgIC8vIGNvbnN0IHsgcmV0dXJuVmFsdWUgfSA9IGNvbXBpbGVBcmM0KFJldGkpLmNhbGwuZ2V0VmFsaWRhdG9yU3RhdGUoewogICAgLy8gICBhcHBJZDogcmVnaXN0cnlBcHBJZCwKICAgIC8vICAgYXJnczogW3ZhbGlkYXRvcklkXSwKICAgIC8vIH0pOwogICAgaXR4bl9iZWdpbgogICAgcHVzaGJ5dGVzIDB4MWYyZjAxMDkgLy8gbWV0aG9kICJnZXRWYWxpZGF0b3JTdGF0ZSh1aW50NjQpKHVpbnQxNix1aW50NjQsdWludDY0LHVpbnQ2NCkiCiAgICBpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwogICAgaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKICAgIGludGNfMSAvLyAwCiAgICBpdHhuX2ZpZWxkIE9uQ29tcGxldGlvbgogICAgZGlnIDQKICAgIGl0eG5fZmllbGQgQXBwbGljYXRpb25JRAogICAgcHVzaGludCA2IC8vIGFwcGwKICAgIGl0eG5fZmllbGQgVHlwZUVudW0KICAgIGludGNfMSAvLyAwCiAgICBpdHhuX2ZpZWxkIEZlZQogICAgaXR4bl9zdWJtaXQKICAgIGl0eG4gTGFzdExvZwogICAgZHVwCiAgICBleHRyYWN0IDQgMAogICAgc3dhcAogICAgZXh0cmFjdCAwIDQKICAgIHB1c2hieXRlcyAweDE1MWY3Yzc1CiAgICA9PQogICAgYXNzZXJ0IC8vIEJ5dGVzIGhhcyB2YWxpZCBwcmVmaXgKICAgIGR1cAogICAgbGVuCiAgICBwdXNoaW50IDI2IC8vIDI2CiAgICA9PQogICAgYXNzZXJ0IC8vIGludmFsaWQgbnVtYmVyIG9mIGJ5dGVzIGZvciBWYWxpZGF0b3JDdXJTdGF0ZQogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6MTMKICAgIC8vIGxvZyhlbmNvZGVBcmM0KHJldHVyblZhbHVlKSk7CiAgICBsb2cKICAgIGludGNfMiAvLyAxCiAgICArCiAgICBidXJ5IDEKICAgIGIgZ2V0VmFsaWRhdG9yU3RhdGVzX2Zvcl9oZWFkZXJAMgoKZ2V0VmFsaWRhdG9yU3RhdGVzX2FmdGVyX2ZvckA2OgogICAgLy8gc21hcnRfY29udHJhY3RzL3JldGlfcmVhZGVyL2NvbnRyYWN0LmFsZ28udHM6NgogICAgLy8gQGFiaW1ldGhvZCh7IHJlYWRvbmx5OiB0cnVlLCBvbkNyZWF0ZTogJ3JlcXVpcmUnIH0pCiAgICBwdXNoYnl0ZXMgMHgxNTFmN2M3NTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAKICAgIGxvZwogICAgaW50Y18yIC8vIDEKICAgIHJldHVybgo=",
+        "clear": "I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBAYWxnb3JhbmRmb3VuZGF0aW9uL2FsZ29yYW5kLXR5cGVzY3JpcHQvYmFzZS1jb250cmFjdC5kLnRzOjpCYXNlQ29udHJhY3QuY2xlYXJTdGF0ZVByb2dyYW0oKSAtPiB1aW50NjQ6Cm1haW46CiAgICBwdXNoaW50IDEgLy8gMQogICAgcmV0dXJuCg=="
+    },
+    "state": {
+        "global": {
+            "num_byte_slices": 0,
+            "num_uints": 0
+        },
+        "local": {
+            "num_byte_slices": 0,
+            "num_uints": 0
+        }
+    },
+    "schema": {
+        "global": {
+            "declared": {},
+            "reserved": {}
+        },
+        "local": {
+            "declared": {},
+            "reserved": {}
+        }
+    },
+    "contract": {
+        "name": "RetiReader",
+        "methods": [
+            {
+                "name": "getValidatorStates",
+                "args": [
+                    {
+                        "type": "uint64",
+                        "name": "registryAppId"
+                    },
+                    {
+                        "type": "uint64[]",
+                        "name": "validatorIds"
+                    }
+                ],
+                "readonly": true,
+                "returns": {
+                    "type": "(uint16,uint64,uint64,uint64)"
+                }
+            }
+        ],
+        "networks": {}
+    },
+    "bare_call_config": {}
+}

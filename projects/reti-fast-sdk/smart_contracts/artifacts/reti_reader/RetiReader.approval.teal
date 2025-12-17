@@ -1,0 +1,114 @@
+#pragma version 11
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 8 0 1
+    // smart_contracts/reti_reader/contract.algo.ts:5
+    // export class RetiReader extends Contract {
+    pushbytes 0x24e00c80 // method "getValidatorStates(uint64,uint64[])(uint16,uint64,uint64,uint64)"
+    txna ApplicationArgs 0
+    match main_getValidatorStates_route@2
+    err
+
+main_getValidatorStates_route@2:
+    // smart_contracts/reti_reader/contract.algo.ts:6
+    // @abimethod({ readonly: true, onCreate: 'require' })
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    assert // OnCompletion must be NoOp && can only call when creating
+    b getValidatorStates
+
+
+// smart_contracts/reti_reader/contract.algo.ts::RetiReader.getValidatorStates[routing]() -> void:
+getValidatorStates:
+    // smart_contracts/reti_reader/contract.algo.ts:6
+    // @abimethod({ readonly: true, onCreate: 'require' })
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 2
+    dupn 2
+    intc_1 // 0
+    extract_uint16 // on error: invalid array length header
+    dup
+    cover 2
+    intc_0 // 8
+    *
+    pushint 2 // 2
+    +
+    swap
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<uint64>
+    intc_1 // 0
+
+getValidatorStates_for_header@2:
+    // smart_contracts/reti_reader/contract.algo.ts:8
+    // for (const validatorId of validatorIds) {
+    dup
+    dig 2
+    <
+    bz getValidatorStates_after_for@6
+    dig 2
+    extract 2 0
+    dig 1
+    dup
+    cover 2
+    intc_0 // 8
+    *
+    intc_0 // 8
+    extract3 // on error: index access is out of bounds
+    // smart_contracts/reti_reader/contract.algo.ts:9-12
+    // const { returnValue } = compileArc4(Reti).call.getValidatorState({
+    //   appId: registryAppId,
+    //   args: [validatorId],
+    // });
+    itxn_begin
+    pushbytes 0x1f2f0109 // method "getValidatorState(uint64)(uint16,uint64,uint64,uint64)"
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    intc_1 // 0
+    itxn_field OnCompletion
+    dig 4
+    itxn_field ApplicationID
+    pushint 6 // appl
+    itxn_field TypeEnum
+    intc_1 // 0
+    itxn_field Fee
+    itxn_submit
+    itxn LastLog
+    dup
+    extract 4 0
+    swap
+    extract 0 4
+    pushbytes 0x151f7c75
+    ==
+    assert // Bytes has valid prefix
+    dup
+    len
+    pushint 26 // 26
+    ==
+    assert // invalid number of bytes for ValidatorCurState
+    // smart_contracts/reti_reader/contract.algo.ts:13
+    // log(encodeArc4(returnValue));
+    log
+    intc_2 // 1
+    +
+    bury 1
+    b getValidatorStates_for_header@2
+
+getValidatorStates_after_for@6:
+    // smart_contracts/reti_reader/contract.algo.ts:6
+    // @abimethod({ readonly: true, onCreate: 'require' })
+    pushbytes 0x151f7c750000000000000000000000000000000000000000000000000000
+    log
+    intc_2 // 1
+    return
