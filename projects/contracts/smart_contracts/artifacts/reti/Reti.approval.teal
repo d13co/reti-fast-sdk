@@ -3,22 +3,22 @@
 
 // @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
 main:
-    // smart_contracts/reti/contract.algo.ts:25
+    // smart_contracts/reti/contract.algo.ts:46
     // export class Reti extends Contract {
     txn NumAppArgs
-    bz main___algots__.defaultCreate@9
+    bz main___algots__.defaultCreate@10
     txn OnCompletion
     !
     assert // OnCompletion must be NoOp
     txn ApplicationID
     assert
-    pushbytess 0x1f2f0109 0x910e94ac // method "getValidatorState(uint64)(uint16,uint64,uint64,uint64)", method "getPools(uint64)(uint64,uint16,uint64)[]"
+    pushbytess 0x75aff61d 0x1f2f0109 0x910e94ac // method "getValidatorConfig(uint64)(uint64,address,address,uint64,uint8,address,uint64[4],uint64,uint64,uint64,uint32,uint32,address,uint64,uint64,uint8,uint64,uint64)", method "getValidatorState(uint64)(uint16,uint64,uint64,uint64)", method "getPools(uint64)(uint64,uint16,uint64)[]"
     txna ApplicationArgs 0
-    match getValidatorState getPools
+    match getValidatorConfig getValidatorState getPools
     err
 
-main___algots__.defaultCreate@9:
-    // smart_contracts/reti/contract.algo.ts:25
+main___algots__.defaultCreate@10:
+    // smart_contracts/reti/contract.algo.ts:46
     // export class Reti extends Contract {
     txn OnCompletion
     !
@@ -30,29 +30,43 @@ main___algots__.defaultCreate@9:
     return
 
 
-// smart_contracts/reti/contract.algo.ts::Reti.getValidatorState[routing]() -> void:
-getValidatorState:
-    // smart_contracts/reti/contract.algo.ts:26
+// smart_contracts/reti/contract.algo.ts::Reti.getValidatorConfig[routing]() -> void:
+getValidatorConfig:
+    // smart_contracts/reti/contract.algo.ts:47
     // @abimethod({ readonly: true })
     txna ApplicationArgs 1
     len
     pushint 8 // 8
     ==
     assert // invalid number of bytes for arc4.uint64
-    // smart_contracts/reti/contract.algo.ts:28
+    // smart_contracts/reti/contract.algo.ts:49
+    // err("stub");
+    err // stub
+
+
+// smart_contracts/reti/contract.algo.ts::Reti.getValidatorState[routing]() -> void:
+getValidatorState:
+    // smart_contracts/reti/contract.algo.ts:52
+    // @abimethod({ readonly: true })
+    txna ApplicationArgs 1
+    len
+    pushint 8 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    // smart_contracts/reti/contract.algo.ts:54
     // err("stub");
     err // stub
 
 
 // smart_contracts/reti/contract.algo.ts::Reti.getPools[routing]() -> void:
 getPools:
-    // smart_contracts/reti/contract.algo.ts:31
+    // smart_contracts/reti/contract.algo.ts:57
     // @abimethod({ readonly: true })
     txna ApplicationArgs 1
     len
     pushint 8 // 8
     ==
     assert // invalid number of bytes for arc4.uint64
-    // smart_contracts/reti/contract.algo.ts:33
+    // smart_contracts/reti/contract.algo.ts:59
     // err("stub");
     err // stub

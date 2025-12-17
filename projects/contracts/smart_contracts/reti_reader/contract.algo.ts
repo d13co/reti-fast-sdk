@@ -1,6 +1,6 @@
-import { clone, Contract, log, uint64 } from "@algorandfoundation/algorand-typescript";
-import { PoolInfo, Reti, ValidatorCurState } from "../reti/contract.algo";
-import { abimethod, compileArc4, encodeArc4, Uint16, Uint8 } from "@algorandfoundation/algorand-typescript/arc4";
+import { clone, Contract, Global, log, uint64 } from "@algorandfoundation/algorand-typescript";
+import { PoolInfo, Reti, ValidatorConfig, ValidatorCurState } from "../reti/contract.algo";
+import { abimethod, Address, compileArc4, encodeArc4, StaticArray, Uint16, Uint32, Uint64, Uint8 } from "@algorandfoundation/algorand-typescript/arc4";
 
 export type ValidatorPoolInfo = {
   validatorId: uint64;
@@ -9,6 +9,37 @@ export type ValidatorPoolInfo = {
 };
 
 export class RetiReader extends Contract {
+  @abimethod({ readonly: true, onCreate: "allow" })
+  getValidatorConfig(registryAppId: uint64, validatorIds: uint64[]): ValidatorConfig {
+    for(const validatorId of validatorIds) {
+      const { returnValue } = compileArc4(Reti).call.getValidatorConfig({
+        appId: registryAppId,
+        args: [validatorId],
+      });
+      log(encodeArc4(returnValue));
+    }
+    return {
+      id: 0,
+      owner: new Address(),
+      manager: new Address(),
+      nfdForInfo: 0,
+      entryGatingType: new Uint8(0),
+      entryGatingAddress: new Address(),
+      entryGatingAssets: new StaticArray(new Uint64(0), new Uint64(0), new Uint64(0), new Uint64(0)),
+      gatingAssetMinBalance: 0,
+      rewardTokenId: 0,
+      rewardPerPayout: 0,
+      epochRoundLength: new Uint32(0),
+      percentToValidator: new Uint32(0),
+      validatorCommissionAddress: new Address(),
+      minEntryStake: 0,
+      maxAlgoPerPool: 0,
+      poolsPerNode: new Uint8(0),
+      sunsettingOn: 0,
+      sunsettingTo: 0,
+    };
+  }
+
   @abimethod({ readonly: true, onCreate: "allow" })
   getValidatorStates(registryAppId: uint64, validatorIds: uint64[]): ValidatorCurState {
     for (const validatorId of validatorIds) {
@@ -28,6 +59,7 @@ export class RetiReader extends Contract {
 
   @abimethod({ readonly: true, onCreate: "allow" })
   getPools(registryAppId: uint64, validatorIds: uint64[]): ValidatorPoolInfo {
+    // we can't type an array return type, so we log each one individually
     for (const validatorId of validatorIds) {
       const { returnValue: poolInfoArr } = compileArc4(Reti).call.getPools({
         appId: registryAppId,

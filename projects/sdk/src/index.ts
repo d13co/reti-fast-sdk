@@ -1,5 +1,5 @@
 import { AlgorandClient } from "@algorandfoundation/algokit-utils"
-import { RetiReaderSDK, ValidatorCurState, ValidatorPoolInfo } from "./generated/RetiReaderSDK.js"
+import { RetiReaderSDK, ValidatorConfig, ValidatorCurState, ValidatorPoolInfo } from "./generated/RetiReaderSDK.js"
 import { chunked } from "./utils/chunked.js"
 
 export class RetiFastSDK {
@@ -11,6 +11,12 @@ export class RetiFastSDK {
     this.algorand = algorand
     this.registryAppId = registryAppId
     this.ghostSDK = new RetiReaderSDK({ algorand: this.algorand })
+  }
+
+  @chunked(127)
+  async getValidatorConfig(validatorIds: number[] | bigint[]): Promise<ValidatorConfig[]> {
+    const extraFee = (1000 * validatorIds.length).microAlgo()
+    return this.ghostSDK.getValidatorConfig({ registryAppId: this.registryAppId, validatorIds }, { extraFee })
   }
 
   @chunked(127)

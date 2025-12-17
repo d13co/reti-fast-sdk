@@ -3,7 +3,7 @@
   "sources": [
     "../../reti/contract.algo.ts"
   ],
-  "mappings": ";AAwBA;;AAAA;;;AAAA;;AAAA;AAAA;AAAA;;AAAA;AAAA;;;;;;;;;;;;AAAA;;;AAAA;;;;;;AAAA;AAAA;;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;AAAA;AACG;;;AAAA;AAAA;;AAAA;AAAA;AAEC;AAGD;;;AAAA;AAAA;;AAAA;AAAA;AAEC",
+  "mappings": ";AA6CA;;AAAA;;;AAAA;;AAAA;AAAA;AAAA;;AAAA;AAAA;;;;;;;;;;;;;;;;;AAAA;;;AAAA;;;;;;;;AAAA;AAAA;;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;;AAAA;AACG;;;AAAA;AAAA;;AAAA;AAAA;AAEC;AAGD;;;AAAA;AAAA;;AAAA;AAAA;AAEC;AAGD;;;AAAA;AAAA;;AAAA;AAAA;AAEC",
   "op_pc_offset": 0,
   "pc_events": {
     "1": {
@@ -20,7 +20,7 @@
       ]
     },
     "3": {
-      "op": "bz main___algots__.defaultCreate@9",
+      "op": "bz main___algots__.defaultCreate@10",
       "stack_out": []
     },
     "6": {
@@ -60,38 +60,42 @@
       "stack_out": []
     },
     "13": {
-      "op": "pushbytess 0x1f2f0109 0x910e94ac // method \"getValidatorState(uint64)(uint16,uint64,uint64,uint64)\", method \"getPools(uint64)(uint64,uint16,uint64)[]\"",
+      "op": "pushbytess 0x75aff61d 0x1f2f0109 0x910e94ac // method \"getValidatorConfig(uint64)(uint64,address,address,uint64,uint8,address,uint64[4],uint64,uint64,uint64,uint32,uint32,address,uint64,uint64,uint8,uint64,uint64)\", method \"getValidatorState(uint64)(uint16,uint64,uint64,uint64)\", method \"getPools(uint64)(uint64,uint16,uint64)[]\"",
       "defined_out": [
         "Method(getPools(uint64)(uint64,uint16,uint64)[])",
+        "Method(getValidatorConfig(uint64)(uint64,address,address,uint64,uint8,address,uint64[4],uint64,uint64,uint64,uint32,uint32,address,uint64,uint64,uint8,uint64,uint64))",
         "Method(getValidatorState(uint64)(uint16,uint64,uint64,uint64))"
       ],
       "stack_out": [
+        "Method(getValidatorConfig(uint64)(uint64,address,address,uint64,uint8,address,uint64[4],uint64,uint64,uint64,uint32,uint32,address,uint64,uint64,uint8,uint64,uint64))",
         "Method(getValidatorState(uint64)(uint16,uint64,uint64,uint64))",
         "Method(getPools(uint64)(uint64,uint16,uint64)[])"
       ]
     },
-    "25": {
+    "30": {
       "op": "txna ApplicationArgs 0",
       "defined_out": [
         "Method(getPools(uint64)(uint64,uint16,uint64)[])",
+        "Method(getValidatorConfig(uint64)(uint64,address,address,uint64,uint8,address,uint64[4],uint64,uint64,uint64,uint32,uint32,address,uint64,uint64,uint8,uint64,uint64))",
         "Method(getValidatorState(uint64)(uint16,uint64,uint64,uint64))",
         "tmp%6#0"
       ],
       "stack_out": [
+        "Method(getValidatorConfig(uint64)(uint64,address,address,uint64,uint8,address,uint64[4],uint64,uint64,uint64,uint32,uint32,address,uint64,uint64,uint8,uint64,uint64))",
         "Method(getValidatorState(uint64)(uint16,uint64,uint64,uint64))",
         "Method(getPools(uint64)(uint64,uint16,uint64)[])",
         "tmp%6#0"
       ]
     },
-    "28": {
-      "op": "match getValidatorState getPools",
+    "33": {
+      "op": "match getValidatorConfig getValidatorState getPools",
       "stack_out": []
     },
-    "34": {
+    "41": {
       "op": "err"
     },
-    "35": {
-      "block": "main___algots__.defaultCreate@9",
+    "42": {
+      "block": "main___algots__.defaultCreate@10",
       "stack_in": [],
       "op": "txn OnCompletion",
       "defined_out": [
@@ -101,7 +105,7 @@
         "tmp%7#0"
       ]
     },
-    "37": {
+    "44": {
       "op": "!",
       "defined_out": [
         "tmp%8#0"
@@ -110,7 +114,7 @@
         "tmp%8#0"
       ]
     },
-    "38": {
+    "45": {
       "op": "txn ApplicationID",
       "defined_out": [
         "tmp%8#0",
@@ -121,7 +125,7 @@
         "tmp%9#0"
       ]
     },
-    "40": {
+    "47": {
       "op": "!",
       "defined_out": [
         "tmp%10#0",
@@ -132,7 +136,7 @@
         "tmp%10#0"
       ]
     },
-    "41": {
+    "48": {
       "op": "&&",
       "defined_out": [
         "tmp%11#0"
@@ -141,12 +145,12 @@
         "tmp%11#0"
       ]
     },
-    "42": {
+    "49": {
       "error": "OnCompletion must be NoOp && can only call when creating",
       "op": "assert // OnCompletion must be NoOp && can only call when creating",
       "stack_out": []
     },
-    "43": {
+    "50": {
       "op": "pushint 1 // 1",
       "defined_out": [
         "1"
@@ -155,11 +159,62 @@
         "1"
       ]
     },
-    "45": {
+    "52": {
       "op": "return",
       "stack_out": []
     },
-    "46": {
+    "53": {
+      "subroutine": "smart_contracts/reti/contract.algo.ts::Reti.getValidatorConfig[routing]",
+      "params": {},
+      "block": "getValidatorConfig",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "56": {
+      "op": "len",
+      "defined_out": [
+        "len%0#0"
+      ],
+      "stack_out": [
+        "len%0#0"
+      ]
+    },
+    "57": {
+      "op": "pushint 8 // 8",
+      "defined_out": [
+        "8",
+        "len%0#0"
+      ],
+      "stack_out": [
+        "len%0#0",
+        "8"
+      ]
+    },
+    "59": {
+      "op": "==",
+      "defined_out": [
+        "eq%0#0"
+      ],
+      "stack_out": [
+        "eq%0#0"
+      ]
+    },
+    "60": {
+      "error": "invalid number of bytes for arc4.uint64",
+      "op": "assert // invalid number of bytes for arc4.uint64",
+      "stack_out": []
+    },
+    "61": {
+      "error": "stub",
+      "op": "err // stub"
+    },
+    "62": {
       "subroutine": "smart_contracts/reti/contract.algo.ts::Reti.getValidatorState[routing]",
       "params": {},
       "block": "getValidatorState",
@@ -172,7 +227,7 @@
         "tmp%0#0"
       ]
     },
-    "49": {
+    "65": {
       "op": "len",
       "defined_out": [
         "len%0#0"
@@ -181,7 +236,7 @@
         "len%0#0"
       ]
     },
-    "50": {
+    "66": {
       "op": "pushint 8 // 8",
       "defined_out": [
         "8",
@@ -192,7 +247,7 @@
         "8"
       ]
     },
-    "52": {
+    "68": {
       "op": "==",
       "defined_out": [
         "eq%0#0"
@@ -201,16 +256,16 @@
         "eq%0#0"
       ]
     },
-    "53": {
+    "69": {
       "error": "invalid number of bytes for arc4.uint64",
       "op": "assert // invalid number of bytes for arc4.uint64",
       "stack_out": []
     },
-    "54": {
+    "70": {
       "error": "stub",
       "op": "err // stub"
     },
-    "55": {
+    "71": {
       "subroutine": "smart_contracts/reti/contract.algo.ts::Reti.getPools[routing]",
       "params": {},
       "block": "getPools",
@@ -223,7 +278,7 @@
         "tmp%0#0"
       ]
     },
-    "58": {
+    "74": {
       "op": "len",
       "defined_out": [
         "len%0#0"
@@ -232,7 +287,7 @@
         "len%0#0"
       ]
     },
-    "59": {
+    "75": {
       "op": "pushint 8 // 8",
       "defined_out": [
         "8",
@@ -243,7 +298,7 @@
         "8"
       ]
     },
-    "61": {
+    "77": {
       "op": "==",
       "defined_out": [
         "eq%0#0"
@@ -252,12 +307,12 @@
         "eq%0#0"
       ]
     },
-    "62": {
+    "78": {
       "error": "invalid number of bytes for arc4.uint64",
       "op": "assert // invalid number of bytes for arc4.uint64",
       "stack_out": []
     },
-    "63": {
+    "79": {
       "error": "stub",
       "op": "err // stub"
     }
