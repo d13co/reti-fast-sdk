@@ -1,3 +1,4 @@
+import pMap from "p-map";
 import { chunk } from "./chunk.js";
 
 /**
@@ -5,7 +6,7 @@ import { chunk } from "./chunk.js";
  * @param chunkSize - The maximum size of each chunk
  * @returns Method decorator
  */
-export function chunked(chunkSize: number, chunkArgIndex: number = 0) {
+export function chunked(chunkSize: number, { chunkArgIndex = 0, concurrency = 2 } = {}) {
   return function (
     target: any,
     propertyKey: string,
@@ -20,16 +21,13 @@ export function chunked(chunkSize: number, chunkArgIndex: number = 0) {
         // console.log("No chunking needed, calling original method directly.");
         return originalMethod.apply(this, [ids, ...args]);
       }
-
+      console.log({ message: `Chunking array of size ${ids.length} into chunks of size ${chunkSize} with concurrency ${concurrency}` });
       // Chunk the appIds array
       const chunks = chunk(ids, chunkSize);
-      // Process each chunk sequentially and collect results
-      const results = [];
-      for (const chunkedIds of chunks) {
+      const results = await pMap(chunks, async (chunkedIds) => {
         // console.log(`Processing chunk of size ${chunkedIds.length}: ${chunkedIds}`);
-        const chunkResult = await originalMethod.apply(this, [chunkedIds, ...args]);
-        results.push(chunkResult);
-      }
+        return originalMethod.apply(this, [chunkedIds, ...args]);
+      }, { concurrency });
 
       // Flatten the results into a single array
       return results.flat();

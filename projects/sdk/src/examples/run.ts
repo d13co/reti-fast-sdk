@@ -1,5 +1,5 @@
 import { AlgorandClient } from "@algorandfoundation/algokit-utils"
-import { RetiFastSDK } from "."
+import { RetiFastSDK } from ".."
 
 const registryAppId = 2714516089
 
@@ -9,11 +9,6 @@ const sdk = new RetiFastSDK({
 })
 
 ;(async () => {
-  console.time("bs")
-  const blockTimestamps = await sdk.getBlockTimestamps(10)
-  console.timeEnd("bs")
-  console.log("Block Timestamps:", blockTimestamps)
-
   console.time("run")
   const numValidators = await sdk.getNumValidators()
   const validatorIds = new Array(numValidators).fill(0).map((_, i) => i + 1)
@@ -36,16 +31,27 @@ const sdk = new RetiFastSDK({
     console.log("  --")
   })
 
-  const d = sdk.getPools(validatorIds).then((pools) => {
+  const d = sdk.getPools(validatorIds).then(async (pools) => {
     console.log("Retrieved pools:", pools.length)
     console.log("Samples 1 63 95 96", pools[0], pools[62], pools[94], pools[95])
-    console.log("  --")
     // at time of writing:
     // validator id 63 has 0
     // validator id 95 has 3
     // validator id 96 has 1
+    console.log("  --")
+    const poolAppIds = pools.flatMap((pools, index) => pools.map((poolInfo) => poolInfo.poolAppId))
+    console.time("algodversions")
+    const algodVersions = await sdk.getPoolAlgodVersions(poolAppIds.map((id) => Number(id)))
+    console.log(algodVersions.length)
+    console.timeEnd("algodversions")
+    return pools
   })
 
-  await Promise.all([a, b, c, d])
+  const bt = sdk.getBlockTimestamps(10).then((blockTimestamps) => {
+    console.log("Block Timestamps:", blockTimestamps)
+    console.log("  --")
+  })
+
+  await Promise.all([a, b, c, d, bt])
   console.timeEnd("run")
 })()

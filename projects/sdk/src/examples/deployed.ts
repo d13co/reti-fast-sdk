@@ -1,5 +1,5 @@
 import { AlgorandClient } from "@algorandfoundation/algokit-utils"
-import { RetiFastSDK } from "."
+import { RetiFastSDK } from ".."
 import algosdk from "algosdk"
 
 const deployer = algosdk.mnemonicToSecretKey(
@@ -18,7 +18,6 @@ const factory = algorand.client.getTypedAppFactory(RetiFastSDK.ghost.factory, {
 
   // console.log(`Deployed RetiReader at app ID: ${appClient.appId}`)
 
-
   const deployed = new RetiFastSDK({
     algorand,
     registryAppId: 0n,
@@ -26,12 +25,12 @@ const factory = algorand.client.getTypedAppFactory(RetiFastSDK.ghost.factory, {
   })
 
   await deployed.getBlockTimestamps(10)
-console.log("--dEPlOyED--")
+  console.log("--dEPlOyED--")
   console.time("deployed")
   await deployed.getBlockTimestamps(10)
   console.timeEnd("deployed")
 
-console.log("--ghost--")
+  console.log("--ghost--")
   const ghost = new RetiFastSDK({
     algorand,
     registryAppId: 0n,
@@ -40,5 +39,4 @@ console.log("--ghost--")
   console.time("ghost")
   await ghost.getBlockTimestamps(10)
   console.timeEnd("ghost")
-
 })()

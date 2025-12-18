@@ -1,5 +1,5 @@
 import { Contract, err, uint64 } from "@algorandfoundation/algorand-typescript";
-import { abimethod, Address, StaticArray, Uint16, Uint32, Uint64, Uint8 } from "@algorandfoundation/algorand-typescript/arc4";
+import { abimethod } from "@algorandfoundation/algorand-typescript/arc4";
 import { ValidatorConfig, ValidatorCurState, PoolInfo, NodePoolAssignmentConfig } from "./types.algo";
 
 /*

@@ -1,4 +1,4 @@
-import { assert, clone, Contract, FixedArray, Global, log, op, Txn, uint64 } from "@algorandfoundation/algorand-typescript";
+import { arc4, assert, bytes, Bytes, clone, Contract, FixedArray, Global, log, op, Txn, uint64 } from "@algorandfoundation/algorand-typescript";
 import { NodeConfig, PoolInfo, ValidatorConfig, ValidatorCurState } from "../reti/types.algo";
 import { abimethod, Address, baremethod, compileArc4, encodeArc4, Uint16, Uint32, Uint64, Uint8 } from "@algorandfoundation/algorand-typescript/arc4";
 import { NodePoolAssignmentConfig } from "../reti/types.algo";
@@ -6,7 +6,6 @@ import { Reti } from "../reti/contract.algo";
 
 export type ValidatorPoolInfo = {
   validatorId: uint64;
-  // poolId: Uint8;
   poolInfo: PoolInfo;
 };
 
@@ -171,5 +170,18 @@ export class RetiReader extends Contract {
       log(op.Block.blkTimestamp(round));
     }
     return 0;
+  }
+
+  @abimethod({ readonly: true, onCreate: "allow" })
+  getAlgodVersion(poolAppIds: uint64[]): arc4.DynamicBytes {
+    for (const poolAppId of poolAppIds) {
+      const [algodVer, exists] = op.AppGlobal.getExBytes(poolAppId, Bytes`algodVer`);
+      if (exists) {
+        log(new arc4.DynamicBytes(algodVer));
+      } else {
+        log(new arc4.DynamicBytes(Bytes``));
+      }
+    }
+    return new arc4.DynamicBytes(Bytes``);
   }
 }

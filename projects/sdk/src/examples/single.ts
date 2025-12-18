@@ -1,5 +1,5 @@
 import { AlgorandClient } from "@algorandfoundation/algokit-utils"
-import { RetiFastSDK } from "."
+import { RetiFastSDK } from ".."
 
 const registryAppId = 2714516089
 
