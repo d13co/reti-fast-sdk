@@ -9,6 +9,11 @@ const sdk = new RetiFastSDK({
 })
 
 ;(async () => {
+  console.time("bs")
+  const blockTimestamps = await sdk.getBlockTimestamps(10)
+  console.timeEnd("bs")
+  console.log("Block Timestamps:", blockTimestamps)
+
   console.time("run")
   const numValidators = await sdk.getNumValidators()
   const validatorIds = new Array(numValidators).fill(0).map((_, i) => i + 1)

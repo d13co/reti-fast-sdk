@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "lib",
+    "outDir": "dist",
     "declaration": true,
     "target": "ES2022",
     "moduleResolution": "node",
@@ -12,5 +12,5 @@
     "skipLibCheck": true,
     "experimentalDecorators": true
   },
-  "include": ["src"],
+  "include": ["src"]
 }

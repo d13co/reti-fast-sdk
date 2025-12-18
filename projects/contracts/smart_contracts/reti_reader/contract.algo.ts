@@ -1,15 +1,6 @@
-import { clone, Contract, FixedArray, Global, log, uint64 } from "@algorandfoundation/algorand-typescript";
+import { assert, clone, Contract, FixedArray, Global, log, op, Txn, uint64 } from "@algorandfoundation/algorand-typescript";
 import { NodeConfig, PoolInfo, ValidatorConfig, ValidatorCurState } from "../reti/types.algo";
-import {
-  abimethod,
-  Address,
-  compileArc4,
-  encodeArc4,
-  Uint16,
-  Uint32,
-  Uint64,
-  Uint8,
-} from "@algorandfoundation/algorand-typescript/arc4";
+import { abimethod, Address, baremethod, compileArc4, encodeArc4, Uint16, Uint32, Uint64, Uint8 } from "@algorandfoundation/algorand-typescript/arc4";
 import { NodePoolAssignmentConfig } from "../reti/types.algo";
 import { Reti } from "../reti/contract.algo";
 
@@ -19,16 +10,35 @@ export type ValidatorPoolInfo = {
   poolInfo: PoolInfo;
 };
 
+export type AllPoolInfo = {
+  config: ValidatorConfig;
+  state: ValidatorCurState;
+  poolInfo: PoolInfo[];
+  nodeAssignment: NodePoolAssignmentConfig;
+};
+
 export class RetiReader extends Contract {
+  @baremethod({ allowActions: ["UpdateApplication", "DeleteApplication"] })
+  adminOnly(): void {
+    assert(Txn.sender === Global.creatorAddress);
+  }
+
   @abimethod({ readonly: true, onCreate: "allow" })
   getValidatorConfig(registryAppId: uint64, validatorIds: uint64[]): ValidatorConfig {
     for (const validatorId of validatorIds) {
-      const { returnValue } = compileArc4(Reti).call.getValidatorConfig({
-        appId: registryAppId,
-        args: [validatorId],
-      });
-      log(encodeArc4(returnValue));
+      log(encodeArc4(this.getRemoteValidatorConfig(registryAppId, validatorId)));
     }
+    return this.getEmptyConfig();
+  }
+
+  private getRemoteValidatorConfig(registryAppId: uint64, validatorId: uint64): ValidatorConfig {
+    return compileArc4(Reti).call.getValidatorConfig({
+      appId: registryAppId,
+      args: [validatorId],
+    }).returnValue;
+  }
+
+  private getEmptyConfig(): ValidatorConfig {
     return {
       id: 0,
       owner: new Address(),
@@ -54,12 +64,19 @@ export class RetiReader extends Contract {
   @abimethod({ readonly: true, onCreate: "allow" })
   getValidatorStates(registryAppId: uint64, validatorIds: uint64[]): ValidatorCurState {
     for (const validatorId of validatorIds) {
-      const { returnValue } = compileArc4(Reti).call.getValidatorState({
-        appId: registryAppId,
-        args: [validatorId],
-      });
-      log(encodeArc4(returnValue));
+      log(encodeArc4(this.getRemoteValidatorState(registryAppId, validatorId)));
     }
+    return this.getEmptyState();
+  }
+
+  private getRemoteValidatorState(registryAppId: uint64, validatorId: uint64): ValidatorCurState {
+    return compileArc4(Reti).call.getValidatorState({
+      appId: registryAppId,
+      args: [validatorId],
+    }).returnValue;
+  }
+
+  private getEmptyState(): ValidatorCurState {
     return {
       numPools: new Uint16(0),
       totalStakers: 0,
@@ -72,15 +89,23 @@ export class RetiReader extends Contract {
   getPools(registryAppId: uint64, validatorIds: uint64[]): ValidatorPoolInfo {
     // we can't type an array return type, so we log each one individually
     for (const validatorId of validatorIds) {
-      const { returnValue: poolInfoArr } = compileArc4(Reti).call.getPools({
-        appId: registryAppId,
-        args: [validatorId],
-      });
+      const poolInfoArr = this.getRemotePoolInfo(registryAppId, validatorId);
       for (const poolInfo of clone(poolInfoArr)) {
         log(encodeArc4({ validatorId, poolInfo }));
       }
     }
 
+    return this.getEmptyPools();
+  }
+
+  private getRemotePoolInfo(registryAppId: uint64, validatorId: uint64): PoolInfo[] {
+    return compileArc4(Reti).call.getPools({
+      appId: registryAppId,
+      args: [validatorId],
+    }).returnValue;
+  }
+
+  private getEmptyPools(): ValidatorPoolInfo {
     return {
       validatorId: 0,
       poolInfo: {
@@ -94,13 +119,57 @@ export class RetiReader extends Contract {
   @abimethod({ readonly: true, onCreate: "allow" })
   getNodePoolAssignments(registryAppId: uint64, validatorIds: uint64[]): NodePoolAssignmentConfig {
     for (const validatorId of validatorIds) {
-      const { returnValue } = compileArc4(Reti).call.getNodePoolAssignments({
-        appId: registryAppId,
-        args: [validatorId],
-      });
-      log(encodeArc4(returnValue));
+      log(encodeArc4(this.getRemoteNodePoolAssignments(registryAppId, validatorId)));
     }
-    const n: NodeConfig = { poolAppIds: new FixedArray(new Uint64(0), new Uint64(0), new Uint64(0)) }
-    return { nodes: new FixedArray(clone(n), clone(n), clone(n), clone(n), clone(n), clone(n), clone(n), clone(n)) };
+    return this.getEmptyNodeAssignments();
+  }
+
+  private getRemoteNodePoolAssignments(registryAppId: uint64, validatorId: uint64): NodePoolAssignmentConfig {
+    return compileArc4(Reti).call.getNodePoolAssignments({
+      appId: registryAppId,
+      args: [validatorId],
+    }).returnValue;
+  }
+
+  private getEmptyNodeAssignments(): NodePoolAssignmentConfig {
+    const n: NodeConfig = { poolAppIds: new FixedArray(new Uint64(0), new Uint64(0), new Uint64(0)) };
+    return {
+      nodes: new FixedArray(clone(n), clone(n), clone(n), clone(n), clone(n), clone(n), clone(n), clone(n)),
+    };
+  }
+
+  @abimethod({ readonly: true, onCreate: "allow" })
+  getAllPoolInfo(registryAppId: uint64, validatorIds: uint64[]): AllPoolInfo {
+    for (const validatorId of validatorIds) {
+      const reti = compileArc4(Reti);
+
+      const config = this.getRemoteValidatorConfig(registryAppId, validatorId);
+      const state = this.getRemoteValidatorState(registryAppId, validatorId);
+      const poolInfo = this.getRemotePoolInfo(registryAppId, validatorId);
+      const nodeAssignment = this.getRemoteNodePoolAssignments(registryAppId, validatorId);
+
+      const allPoolInfo: AllPoolInfo = {
+        config: clone(config),
+        state: clone(state),
+        poolInfo: clone(poolInfo),
+        nodeAssignment: clone(nodeAssignment),
+      };
+      log(encodeArc4(allPoolInfo));
+    }
+
+    return {
+      config: this.getEmptyConfig(),
+      state: this.getEmptyState(),
+      poolInfo: [this.getEmptyPools().poolInfo],
+      nodeAssignment: this.getEmptyNodeAssignments(),
+    };
+  }
+
+  @abimethod({ readonly: true, onCreate: "allow" })
+  getBlockTimestamps(num: uint64): uint64 {
+    for (let round: uint64 = Txn.lastValid - num - 1; round < Txn.firstValid - 1; round++) {
+      log(op.Block.blkTimestamp(round));
+    }
+    return 0;
   }
 }
