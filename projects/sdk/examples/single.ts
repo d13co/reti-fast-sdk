@@ -1,7 +1,5 @@
 import { AlgorandClient } from "@algorandfoundation/algokit-utils"
-import { RetiGhostSDK } from ".."
-import { chunk } from "../src/utils/chunk";
-import pMap from "p-map";
+import { RetiGhostSDK } from "../src"
 
 const registryAppId = 2714516089
 
