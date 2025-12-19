@@ -2,9 +2,9 @@
 
 Fast, read-only SDK for the Reti staking pool registry on Algorand, generated with Ghostkit and wrapped for ergonomic, high‑throughput reads.
 
-It simulates a "ghost" contract (or optionally calls a deployed reader app) to batch and decode on-chain data efficiently with a single simulate per request. This follows the Ghostkit pattern; see the upstream rationale and constraints in the Ghostkit README.
+It simulates a "ghost" contract (or optionally calls a deployed reader app) to batch and decode on-chain data efficiently with a single simulate per request. This follows the Ghostkit pattern; see the upstream rationale and constraints in the [Ghostkit README](https://github.com/d13co/ghostkit).
 
-- Ghostkit: generates a typed SDK that reads structured data from contract log lines
+- Ghostkit: generates a typed SDK that reads structured data from contract log lines ([GitHub](https://github.com/d13co/ghostkit), [npm](https://www.npmjs.com/package/ghostkit))
 - Wrapper: `RetiGhostSDK` adds batching and helpers specific to the Reti registry
 
 
@@ -46,19 +46,17 @@ const sdk = new RetiGhostSDK({
 })
 
 const numValidators = await sdk.getNumValidators()
-const validatorIds = Array.from({ length: numValidators }, (_, i) => BigInt(i + 1))
+// Validator IDs are numeric and start from 1
+const validatorIds = Array.from({ length: numValidators }, (_, i) => i + 1)
 
-// Batched reads with automatic chunking
-const [configs, states, pools, nodeAssignments] = await Promise.all([
-  sdk.getValidatorConfig(validatorIds),
-  sdk.getValidatorStates(validatorIds),
-  sdk.getPools(validatorIds),
-  sdk.getNodePoolAssignments(validatorIds),
-])
+// Aggregated read: config, state, poolInfo[], nodeAssignment per validator
+const validators = await sdk.getValidators(validatorIds)
+// Order of inputs is preserved in outputs
+// Example access for validator ID= : validators[0].config, validators[0].state, validators[0].poolInfo, validators[0].nodeAssignment
 
-// Derived helpers
+// Fetch all pools' algod versions
 const algodVersions = await sdk.getPoolAlgodVersions(
-  pools.flatMap(list => list.map(p => p.poolAppId))
+  validators.flatMap(v => v.poolInfo.map(({poolAppId}) => poolAppId))
 )
 ```
 
@@ -74,10 +72,17 @@ const algodVersions = await sdk.getPoolAlgodVersions(
 
 All methods are read-only and return decoded, typed data. Many accept arrays and are automatically chunked for you.
 
-- `constructor({ algorand, registryAppId, ghostAppId? })`
+- `constructor({ algorand, registryAppId, ghostAppId?, concurrency? })`
   - `algorand`: Algokit `AlgorandClient` (e.g., `AlgorandClient.mainNet()`)
   - `registryAppId`: Reti registry application id
   - `ghostAppId?`: optional app id of a deployed reader; if omitted, uses a ghost (simulated) contract
+  - `concurrency?`: per-call chunk concurrency for batched reads (default `4`).
+
+- `getValidators(validatorIds): Promise<Validator[]>`
+  - Convenience call returning config, state, poolInfo, and nodeAssignment together.
+  - Aggregates multiple reader calls behind the scenes; results are still per validator id in a single batched simulate.
+  - Chunks 64 validators per simulate call
+  - Returns `Validator[]`, an aggregated reader-only struct that is not defined in the core Reti registry contract (it’s composed for convenience by the reader/SDK).
 
 - `getNumValidators(): Promise<number>`
   - Reads `numV` from the registry global state.
@@ -94,54 +99,42 @@ All methods are read-only and return decoded, typed data. Many accept arrays and
 - `getNodePoolAssignments(validatorIds): Promise<NodePoolAssignmentConfig[]>`
   - Node assignment structure for each validator.
 
-- `getValidators(validatorIds): Promise<Validator[]>`
-  - Convenience call returning config, state, poolInfo, and nodeAssignment together.
-
 - `getPoolAlgodVersions(poolAppIds): Promise<string[]>`
   - Reads the algod version string from many pool app ids. Uses app references for speed.
 
 - `getBlockTimestamps(num): Promise<bigint[]>`
-  - Small utility that demonstrates block access via ghost reader.
+  - Small utility that fetches the last `num` block timestamps via ghost reader.
 
 - `getAssets(assetIds): Promise<AssetInfo[]>`
   - Reads asset metadata and returns a simplified union type:
     - `{ index: bigint, deleted: true }` for deleted assets
     - `{ index: bigint, params: { creator, total, decimals, unitName, name } }` otherwise
+  - Will fail for invalid asset IDs (under 1000)
 
 Types like `ValidatorConfig`, `ValidatorCurState`, `PoolInfo`, `NodePoolAssignmentConfig`, and `Validator` are exported from the generated reader SDK and used directly here.
 
 
 ## Example Recipes
 
-- Fetch everything at once
+- Fetch all validator related data at once
+```ts
+// Aggregated read: config, state, poolInfo[], nodeAssignment per validator
+const validators = await sdk.getValidators(validatorIds)
+// Order of inputs is preserved in outputs
+// Example access for validator ID= : validators[0].config, validators[0].state, validators[0].poolInfo, validators[0].nodeAssignment
+```
+
+- Fetch all validator configs at once
 ```ts
 const numValidators = await sdk.getNumValidators()
 const ids = [...Array(numValidators)].map((_, i) => i + 1)
 
-const [assignments, configs, states, pools] = await Promise.all([
-  sdk.getNodePoolAssignments(ids),
-  sdk.getValidatorConfig(ids),
-  sdk.getValidatorStates(ids),
-  sdk.getPools(ids),
-])
-```
-
-- Paginate large calls yourself (wrapper already chunks, but you can control concurrency by slicing)
-```ts
-import pMap from "p-map"
-import { chunk } from "reti-ghost-sdk/dist/utils/chunk.js" // or copy your own tiny chunk helper
-
-const ids = [...Array(numValidators)].map((_, i) => i + 1)
-const chunks = chunk(ids, 64)
-await pMap(chunks, async (part, i) => {
-  const data = await sdk.getValidators(part)
-  // ...work with data
-}, { concurrency: 2 })
+const configs = await sdk.getValidatorConfig(ids)
 ```
 
 - Read asset metadata
 ```ts
-const assets = await sdk.getAssets([1n, 31566704n])
+const assets = await sdk.getAssets([1234n, 31566704n])
 // -> union: deleted or full params
 ```
 
@@ -154,31 +147,24 @@ By default, calls are simulated against a ghost (non-deployed) reader contract. 
 ```ts
 const sdk = new RetiGhostSDK({ algorand, registryAppId, ghostAppId: 752173746n })
 ```
-- Advanced: you can deploy from the included reader factory via Algokit if needed:
-```ts
-import algosdk from "algosdk"
-const deployer = algosdk.mnemonicToSecretKey("<mnemonic>")
-const factory = sdk.algorand.client.getTypedAppFactory(RetiGhostSDK.ghost.factory, {
-  defaultSender: deployer.addr,
-  defaultSigner: algosdk.makeBasicAccountTransactionSigner(deployer),
-})
-// const { appClient } = await factory.send.create.getBlockTimestamps({ args: { num: 0n } })
-// console.log(appClient.appId)
-```
-
 
 ## Limits and Performance Notes
 
-- AVM limits to consider:
+- AVM limits considered:
   - 128 references per simulate call (apps/assets/accounts/boxes)
   - ~2KB for app args; large inputs must be chunked
 - This SDK automatically chunks large `validatorIds` / `poolAppIds` arrays:
   - Most methods: `@chunked(127)`
   - `getPoolAlgodVersions`: `@chunked(255)` with app references
+- Concurrency:
+  - Per-call: each method invocation processes chunks with a configurable concurrency (default `4`).
+  - Not global: separate calls run their own chunk pipelines; concurrent SDK calls do not share a global limiter.
+  - Order: results preserve input order across chunks.
+  - Configure via constructor `new RetiGhostSDK({ concurrency: 8, ... })` or set `sdk.concurrency = 1` to throttle.
 - Reader account:
   - The underlying generated SDK simulates using a funded reader account. The wrapper provides a default.
 
-For deeper background on the approach and trade-offs, see the Ghostkit README and the Ghost contracts motivation.
+For deeper background on the approach and trade-offs, see the [Ghostkit README](https://github.com/d13co/ghostkit) and the Ghost contracts motivation.
 
 
 ## Types
