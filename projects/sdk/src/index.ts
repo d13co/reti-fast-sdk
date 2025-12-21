@@ -15,6 +15,11 @@ import { ALGORAND_ZERO_ADDRESS_STRING } from "algosdk"
 
 export { Validator } from "./generated/RetiReaderSDK.js"
 
+export type PoolBalanceAndLastPayout = {
+  balance: bigint
+  lastPayout: bigint
+}
+
 export type AssetInfo =
   | {
       index: bigint
@@ -108,27 +113,6 @@ export class RetiGhostSDK {
     })
   }
 
-  // @chunked(255)
-  // private async _internal_getPoolInfo(validatorIds: number[] | bigint[]): Promise<ValidatorPoolInfo[]> {
-  //   const extraFee = (16000).microAlgo()
-  //   const args = chunk(
-  //     validatorIds.map((p) => Number(p)),
-  //     16,
-  //   )
-  //   // TODO add app ref
-  //   const extraMethodCallArgs = args.map((chunk) => ({
-  //     extraFee,
-  //     accessReferences: chunk.map((id) => ({
-  //       box: { appId: this.registryAppId, name: Buffer.concat([Buffer.from("v"), encodeUint64(BigInt(id))]) },
-  //     })),
-  //   }))
-  //   console.log(extraMethodCallArgs)
-  //   return this.ghostSDK.getPools({
-  //     methodArgsOrArgsArray: { registryAppId: this.registryAppId, validatorIds },
-  //     extraMethodCallArgs,
-  //   })
-  // }
-
   @chunked(127)
   async getNodePoolAssignments(validatorIds: number[] | bigint[]): Promise<NodePoolAssignmentConfig[]> {
     const extraFee = (1000 * validatorIds.length).microAlgo()
@@ -194,5 +178,15 @@ export class RetiGhostSDK {
       }
     }
     return assets
+  }
+
+  @chunked(128)
+  async getPoolBalancesAndLastPayouts(poolAppIds: number[] | bigint[]): Promise<PoolBalanceAndLastPayout[]> {
+    const data = await this.baseSDK.getPoolBalancesAndLastPayouts({
+      methodArgsOrArgsArray: { poolAppIds },
+    })
+    return data.map(([balance, lastPayout]) => ({
+      balance, lastPayout
+    }))
   }
 }

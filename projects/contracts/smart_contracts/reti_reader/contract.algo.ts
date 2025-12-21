@@ -1,4 +1,17 @@
-import { assert, Asset, Bytes, clone, Contract, FixedArray, Global, log, op, Txn, uint64 } from "@algorandfoundation/algorand-typescript";
+import {
+  Application,
+  assert,
+  Asset,
+  Bytes,
+  clone,
+  Contract,
+  FixedArray,
+  Global,
+  log,
+  op,
+  Txn,
+  uint64,
+} from "@algorandfoundation/algorand-typescript";
 import { AssetInfo, Constraints, MbrAmounts, NodeConfig, PoolInfo, ValidatorConfig, ValidatorCurState } from "../reti/types.algo";
 import {
   abimethod,
@@ -29,7 +42,9 @@ export type Validator = {
 export type MbrAmountsAndProtocolConstraints = {
   mbrAmounts: MbrAmounts;
   constraints: Constraints;
-}
+};
+
+export type BalanceAndLastPayout = [uint64, uint64];
 
 export class RetiReader extends Contract {
   @baremethod({ allowActions: ["UpdateApplication", "DeleteApplication"] })
@@ -39,7 +54,7 @@ export class RetiReader extends Contract {
 
   @abimethod({ readonly: true, onCreate: "allow" })
   getMbrAmountsAndProtocolConstraints(registryAppId: uint64): MbrAmountsAndProtocolConstraints {
-    const reti = compileArc4(Reti)
+    const reti = compileArc4(Reti);
     const mbrAmounts = reti.call.getMbrAmounts({
       appId: registryAppId,
     }).returnValue;
@@ -249,5 +264,15 @@ export class RetiReader extends Contract {
       unitName: "",
       name: "",
     };
+  }
+
+  @abimethod({ readonly: true, onCreate: "allow" })
+  getPoolBalancesAndLastPayouts(poolAppIds: Application[]): BalanceAndLastPayout {
+    for (const poolApp of poolAppIds) {
+      const balance = op.balance(poolApp.address);
+      const [lastPayout] = op.AppGlobal.getExUint64(poolApp, Bytes`lastPayout`);
+      log(encodeArc4([balance, lastPayout] as BalanceAndLastPayout));
+    }
+    return [0, 0];
   }
 }
