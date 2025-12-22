@@ -145,6 +145,8 @@ By default, calls are simulated against a ghost (non-deployed) reader contract. 
 const sdk = new RetiGhostSDK({ algorand, registryAppId, ghostAppId: 123456789013n })
 ```
 
+Ghost Mainnet App ID: 3374692547 **currently updatable by author.**
+
 ## Limits and Performance Notes
 
 - AVM limits considered:
