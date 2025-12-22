@@ -1,5 +1,7 @@
 # Reti Ghost SDK
 
+[![npm version](https://img.shields.io/npm/v/reti-ghost-sdk.svg?color=cb3837)](https://www.npmjs.com/package/reti-ghost-sdk)
+
 Fast, read-only SDK for the Reti staking pool registry on Algorand, generated with Ghostkit and wrapped for ergonomic, high‑throughput reads.
 
 It simulates a "ghost" contract (or optionally calls a deployed reader app) to batch and decode on-chain data efficiently with a single simulate per request. This follows the Ghostkit pattern; see the upstream rationale and constraints in the [Ghostkit README](https://github.com/d13co/ghostkit).
@@ -22,9 +24,9 @@ npm i reti-ghost-sdk
 yarn add reti-ghost-sdk
 ```
 
-Peer/runtime dependencies are included by this package:
-- `@algorandfoundation/algokit-utils`
-- `algosdk`
+Peer dependencies for this package:
+- `@algorandfoundation/algokit-utils` >= 9.2.0
+- `algosdk` >= 3.5.2
 
 Node.js 22+ is required for development (upstream puya-ts requirement).
 
@@ -49,12 +51,11 @@ const validatorIds = Array.from({ length: numValidators }, (_, i) => i + 1)
 // Aggregated read: config, state, poolInfo[], nodeAssignment per validator
 const validators = await sdk.getValidators(validatorIds)
 // Order of inputs is preserved in outputs
-// Example access for validator ID= : validators[0].config, validators[0].state, validators[0].poolInfo, validators[0].nodeAssignment
+// Example access (id == validatorIds[0]): validators[0].config, validators[0].state, validators[0].poolInfo, validators[0].nodeAssignment
 
 // Fetch all pools' algod versions
-const algodVersions = await sdk.getPoolAlgodVersions(
-  validators.flatMap(v => v.poolInfo.map(({poolAppId}) => poolAppId))
-)
+const poolAppIds = pools.flatMap((p) => p.map((pool) => pool.poolAppId))
+const algodVersions = await sdk.getPoolAlgodVersions(poolAppIds)
 ```
 
 
@@ -90,7 +91,7 @@ All methods are read-only and return decoded, typed data. Many accept arrays and
 - `getValidatorStates(validatorIds): Promise<ValidatorCurState[]>`
   - Batch fetches current state (pools, totals, held back, ...).
 
-- `getPools(validatorIds): Promise<ValidatorPoolInfo["poolInfo"][][]>`
+- `getPools(validatorIds): Promise<PoolInfo[][]>`
   - For each validator id, returns an array of its `PoolInfo` entries.
 
 - `getNodePoolAssignments(validatorIds): Promise<NodePoolAssignmentConfig[]>`
@@ -106,7 +107,6 @@ All methods are read-only and return decoded, typed data. Many accept arrays and
   - Reads asset metadata and returns a simplified union type:
     - `{ index: bigint, deleted: true }` for deleted assets
     - `{ index: bigint, params: { creator, total, decimals, unitName, name } }` otherwise
-  - Will fail for invalid asset IDs (under 1000)
 
 Types like `ValidatorConfig`, `ValidatorCurState`, `PoolInfo`, `NodePoolAssignmentConfig`, and `Validator` are exported from the generated reader SDK and used directly here.
 
@@ -118,7 +118,7 @@ Types like `ValidatorConfig`, `ValidatorCurState`, `PoolInfo`, `NodePoolAssignme
 // Aggregated read: config, state, poolInfo[], nodeAssignment per validator
 const validators = await sdk.getValidators(validatorIds)
 // Order of inputs is preserved in outputs
-// Example access for validator ID= : validators[0].config, validators[0].state, validators[0].poolInfo, validators[0].nodeAssignment
+// Example access (first validator): validators[0].config, validators[0].state, validators[0].poolInfo, validators[0].nodeAssignment
 ```
 
 - Fetch all validator configs at once
